@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/theme"
+    tools:context=".ShopProductActivity">
+
+    <TextView
+        android:id="@+id/tvProductShopName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/shop_name"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/lstProducts"
+        app:layout_constraintEnd_toStartOf="@+id/imgProductShopImage"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imgProductShopImage" />
+
+    <ImageView
+        android:id="@+id/imgProductShopImage"
+        android:layout_width="150sp"
+        android:layout_height="150sp"
+        android:maxWidth="200sp"
+        android:maxHeight="200sp"
+        app:layout_constraintBottom_toTopOf="@+id/lstProducts"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/lstProducts"
+        android:layout_width="match_parent"
+        android:layout_height="500sp"
+        android:layout_marginTop="100dp"
+        app:layout_constraintBottom_toTopOf="@+id/tvCartPrice"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvCartPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/default_price"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/btnProductShop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/btnProductShop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="Cart"
+        android:minWidth="100dp"
+        android:minHeight="50dp"
+        android:onClick="onCartClicked"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@android:drawable/ic_media_pause" />
+</androidx.constraintlayout.widget.ConstraintLayout>
