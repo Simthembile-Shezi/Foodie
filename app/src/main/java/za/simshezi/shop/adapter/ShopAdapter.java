@@ -51,6 +51,10 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ShopViewHolder
         return list.size();
     }
 
+    public void filterList(List<ShopModel> filter){
+        list = filter;
+        notifyDataSetChanged();
+    }
     public void add(ShopModel model) {
         list.add(model);
         notifyItemInserted(list.size() - 1);

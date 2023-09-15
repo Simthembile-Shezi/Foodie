@@ -18,6 +18,8 @@ import java.util.List;
 
 import za.simshezi.shop.adapter.IngredientAdapter;
 import za.simshezi.shop.api.FirebaseAPI;
+import za.simshezi.shop.api.ImagesAPI;
+import za.simshezi.shop.mock.IngredientsData;
 import za.simshezi.shop.model.IngredientModel;
 import za.simshezi.shop.model.ProductModel;
 import za.simshezi.shop.style.IngredientItemDecoration;
@@ -43,25 +45,14 @@ public class AddProductCartActivity extends AppCompatActivity {
         tvDescription = findViewById(R.id.tvAddProductCartDescription);
         imgProduct = findViewById(R.id.imgAddProductCart);
         ingredients = new ArrayList<>();
-        api = FirebaseAPI.getInstance();
+        //api = FirebaseAPI.getInstance();
         build();
     }
     private void build(){
         Intent intent = getIntent();
         model = (ProductModel) intent.getSerializableExtra("product");
-        api.getIngredients(model.getProductId(), list -> {
-            if(list != null){
-                for(DocumentSnapshot documentSnapshot: list){
-                    if (documentSnapshot != null && documentSnapshot.exists()) {
-                        String ingredientId = documentSnapshot.getId();
-                        String productId = documentSnapshot.getString("productId");
-                        String name = documentSnapshot.getString("name");
-                        double price = documentSnapshot.getDouble("price");
-                        ingredients.add(new IngredientModel(ingredientId, productId, name, (float) price));
-                    }
-                }
-            }
-        });
+        //ingredients = api.getIngredients(model.getProductId());
+        ingredients = new IngredientsData().getData();
         adapter = new IngredientAdapter(ingredients, view -> {
             total = model.getPrice();
             for(IngredientModel model: IngredientAdapter.ingredients){
@@ -79,7 +70,7 @@ public class AddProductCartActivity extends AppCompatActivity {
             tvName.setText(model.getName());
             tvDescription.setText(model.getDescription());
             tvPrice.setText(String.format("R %s", model.getPrice()));
-            imgProduct.setImageResource(R.drawable.image_6);
+            imgProduct.setImageBitmap(ImagesAPI.convertToBitmap(model.getImage()));
             total = model.getPrice();
         }else {
             finish();

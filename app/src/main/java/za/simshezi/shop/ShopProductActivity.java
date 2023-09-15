@@ -20,6 +20,9 @@ import java.util.List;
 
 import za.simshezi.shop.adapter.ProductAdapter;
 import za.simshezi.shop.api.FirebaseAPI;
+import za.simshezi.shop.api.ImagesAPI;
+import za.simshezi.shop.mock.ProductsData;
+import za.simshezi.shop.mock.ShopData;
 import za.simshezi.shop.model.ProductModel;
 import za.simshezi.shop.model.CartModel;
 import za.simshezi.shop.model.ShopModel;
@@ -44,7 +47,7 @@ public class ShopProductActivity extends AppCompatActivity {
         tvName = findViewById(R.id.tvProductShopName);
         imgShop = findViewById(R.id.imgProductShopImage);
         products = new ArrayList<>();
-        api = FirebaseAPI.getInstance();
+        //api = FirebaseAPI.getInstance();
         build();
     }
 
@@ -63,25 +66,8 @@ public class ShopProductActivity extends AppCompatActivity {
     private void build(){
         Intent data = getIntent();
         ShopModel shop = (ShopModel) data.getSerializableExtra("shop");
-        api.getProducts(shop.getShopId(), list ->{
-            if(list != null){
-                for(DocumentSnapshot documentSnapshot: list){
-                    if (documentSnapshot != null && documentSnapshot.exists()) {
-                        String productId = documentSnapshot.getId();
-                        String shopId = documentSnapshot.getString("shopId");
-                        String name = documentSnapshot.getString("name");
-                        String description = documentSnapshot.getString("description");
-                        double price = documentSnapshot.getDouble("price");
-                        api.getProductImage(productId, bytes -> {
-                            if (bytes != null) {
-                                ProductModel model = new ProductModel(productId, shopId, name, description, (float) price, bytes);
-                                products.add(model);
-                            }
-                        });
-                    }
-                }
-            }
-        });
+        //products = api.getProducts(shop.getShopId());
+        products = new ProductsData().getData();
         cart = new CartModel(shop);
         adapter = new ProductAdapter(products, view -> {
             Intent intent = new Intent(this, AddProductCartActivity.class);
@@ -93,12 +79,11 @@ public class ShopProductActivity extends AppCompatActivity {
         lstProducts.setAdapter(adapter);
         lstProducts.setLayoutManager(layoutManager);
         lstProducts.addItemDecoration(decoration);
-        imgShop.setImageResource(R.drawable.icon);
+        imgShop.setImageBitmap(ImagesAPI.convertToBitmap(shop.getImage()));
         tvName.setText(shop.getName());
-        //imgShop.setImageBitmap(ImagesAPI.convertToBitmap(shop.getImage()));
     }
     public void onCartClicked(View view){
-        Intent intent = new Intent(this, CartActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("cart", cart);
         startActivity(intent);
     }

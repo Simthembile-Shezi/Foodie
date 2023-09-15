@@ -11,12 +11,6 @@ public class ShopModel implements Serializable {
     private boolean status;
     private byte[] image;
 
-    public ShopModel(String name) {
-        this.name = name;
-        this.status = false;
-        this.rating = 0.0f;
-    }
-
     public ShopModel(String shopId, String name, String email, String cellphone, float rating, boolean status, byte[] image) {
         this.shopId = shopId;
         this.name = name;

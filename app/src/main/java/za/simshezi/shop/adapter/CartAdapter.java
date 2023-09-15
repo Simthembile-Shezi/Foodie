@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,10 +14,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
-import za.simshezi.shop.CartActivity;
 import za.simshezi.shop.R;
-import za.simshezi.shop.model.CartModel;
-import za.simshezi.shop.model.IngredientModel;
 import za.simshezi.shop.model.ProductModel;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder>{

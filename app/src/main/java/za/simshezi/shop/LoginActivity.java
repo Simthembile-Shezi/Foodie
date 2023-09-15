@@ -41,8 +41,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onLoginClicked(View view) {
+        startActivity(new Intent(this, MainActivity.class));
         //Simshezi8@gmail.com SimShezi
-        String email = edEmail.getText().toString().trim();
+        /*String email = edEmail.getText().toString().trim();
         String password = edPassword.getText().toString().trim();
         if (TextUtils.isEmpty(email)) {
             Toast.makeText(this, "Enter email address", Toast.LENGTH_SHORT).show();
@@ -63,6 +64,6 @@ public class LoginActivity extends AppCompatActivity {
                         // Login failed
                         Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                     }
-                });
+                });*/
     }
 }
