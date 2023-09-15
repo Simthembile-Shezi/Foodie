@@ -6,10 +6,10 @@ public class OrderModel {
     private String date;
     private int items;
     private float price;
-    private boolean status;
+    private String status;
     private byte[] image;
 
-    public OrderModel(String orderId, String name, String date, int items, float price, boolean status, byte[] image) {
+    public OrderModel(String orderId, String name, String date, int items, float price, String status, byte[] image) {
         this.orderId = orderId;
         this.name = name;
         this.date = date;
@@ -59,11 +59,19 @@ public class OrderModel {
         this.price = price;
     }
 
-    public boolean isStatus() {
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
+
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

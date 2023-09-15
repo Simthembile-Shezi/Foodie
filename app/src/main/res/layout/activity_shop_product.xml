@@ -7,58 +7,99 @@
     android:background="@color/theme"
     tools:context=".ShopProductActivity">
 
-    <TextView
-        android:id="@+id/tvProductShopName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/shop_name"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/lstProducts"
-        app:layout_constraintEnd_toStartOf="@+id/imgProductShopImage"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imgProductShopImage" />
-
-    <ImageView
-        android:id="@+id/imgProductShopImage"
-        android:layout_width="150sp"
-        android:layout_height="150sp"
-        android:maxWidth="200sp"
-        android:maxHeight="200sp"
-        app:layout_constraintBottom_toTopOf="@+id/lstProducts"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:srcCompat="@tools:sample/backgrounds/scenic" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/lstProducts"
+    <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="500sp"
-        android:layout_marginTop="100dp"
-        app:layout_constraintBottom_toTopOf="@+id/tvCartPrice"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnShopCart"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/tvCartPrice"
-        android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardProductShopDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/imgProductShopImage"
+                        android:layout_width="200sp"
+                        android:layout_height="200sp"
+                        android:maxWidth="200sp"
+                        android:maxHeight="200sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:srcCompat="@drawable/image_1" />
+
+                    <TextView
+                        android:id="@+id/tvProductShopName"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/shop_name"
+                        android:textSize="30sp"
+                        app:layout_constraintEnd_toStartOf="@+id/imgProductShopImage"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tvProductShopRating"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="4.5"
+                        app:layout_constraintEnd_toStartOf="@+id/imgProductShopImage"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvProductShopName" />
+
+                    <TextView
+                        android:id="@+id/tvProductShopOpens"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="7:00 - 19:00"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/imgProductShopImage"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tvProductShopAddress"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="10 Avenue, Summer, Port, EC, 6001"
+                        app:layout_constraintBottom_toTopOf="@+id/tvProductShopOpens"
+                        app:layout_constraintEnd_toStartOf="@+id/imgProductShopImage"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvProductShopRating" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/lstProducts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btnShopCart"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:onClick="onCartClicked"
         android:text="@string/default_price"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/btnProductShop"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <ImageButton
-        android:id="@+id/btnProductShop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="Cart"
-        android:minWidth="100dp"
-        android:minHeight="50dp"
-        android:onClick="onCartClicked"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@android:drawable/ic_media_pause" />
 </androidx.constraintlayout.widget.ConstraintLayout>

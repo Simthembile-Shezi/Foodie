@@ -2,6 +2,7 @@ package za.simshezi.shop;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
@@ -9,6 +10,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -33,8 +35,9 @@ public class ShopProductActivity extends AppCompatActivity {
     private RecyclerView lstProducts;
     private List<ProductModel> products;
     private ProductAdapter adapter;
-    private TextView tvPrice, tvName;
+    private TextView tvName;
     private ImageView imgShop;
+    private Button btnCart;
     private CartModel cart;
     private FirebaseAPI api;
 
@@ -43,7 +46,7 @@ public class ShopProductActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop_product);
         lstProducts = findViewById(R.id.lstProducts);
-        tvPrice = findViewById(R.id.tvCartPrice);
+        btnCart = findViewById(R.id.btnShopCart);
         tvName = findViewById(R.id.tvProductShopName);
         imgShop = findViewById(R.id.imgProductShopImage);
         products = new ArrayList<>();
@@ -58,7 +61,7 @@ public class ShopProductActivity extends AppCompatActivity {
             ProductModel model = (ProductModel) data.getSerializableExtra("product");
             if(model != null){
                 cart.add(model);
-                tvPrice.setText(String.format("R %s", cart.getPrice()));
+                btnCart.setText(String.format("R %s", cart.getPrice()));
             }
         }
     }
@@ -74,12 +77,14 @@ public class ShopProductActivity extends AppCompatActivity {
             intent.putExtra("product", adapter.product);
             startActivityForResult(intent, REQ_CODE);
         });
-        RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(2, LinearLayout.VERTICAL);
+        //RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(2, LinearLayout.VERTICAL);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         ProductItemDecoration decoration = new ProductItemDecoration();
         lstProducts.setAdapter(adapter);
         lstProducts.setLayoutManager(layoutManager);
         lstProducts.addItemDecoration(decoration);
-        imgShop.setImageBitmap(ImagesAPI.convertToBitmap(shop.getImage()));
+        //imgShop.setImageBitmap(ImagesAPI.convertToBitmap(shop.getImage()));
+        imgShop.setImageResource(R.drawable.icon);
         tvName.setText(shop.getName());
     }
     public void onCartClicked(View view){

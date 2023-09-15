@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -31,6 +32,7 @@ public class AddProductCartActivity extends AppCompatActivity {
     private TextView tvName, tvDescription;
     private ImageView imgProduct;
     private TextView tvPrice;
+    private Button btnAddCart;
     private ProductModel model;
     float total;
     private FirebaseAPI api;
@@ -44,6 +46,7 @@ public class AddProductCartActivity extends AppCompatActivity {
         tvPrice = findViewById(R.id.tvAddProductCartPrice);
         tvDescription = findViewById(R.id.tvAddProductCartDescription);
         imgProduct = findViewById(R.id.imgAddProductCart);
+        btnAddCart = findViewById(R.id.btnAddProductCart);
         ingredients = new ArrayList<>();
         //api = FirebaseAPI.getInstance();
         build();
@@ -59,7 +62,7 @@ public class AddProductCartActivity extends AppCompatActivity {
                 if(model.getCount() > 0)
                     total += (model.getPrice() * model.getCount());
             }
-            tvPrice.setText(String.format("R %s", total));
+            btnAddCart.setText(String.format("Add : R %s", total));
         });
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         RecyclerView.ItemDecoration decoration = new IngredientItemDecoration();
@@ -70,7 +73,9 @@ public class AddProductCartActivity extends AppCompatActivity {
             tvName.setText(model.getName());
             tvDescription.setText(model.getDescription());
             tvPrice.setText(String.format("R %s", model.getPrice()));
-            imgProduct.setImageBitmap(ImagesAPI.convertToBitmap(model.getImage()));
+            btnAddCart.setText(String.format("Add : R %s", model.getPrice()));
+            //imgProduct.setImageBitmap(ImagesAPI.convertToBitmap(model.getImage()));
+            imgProduct.setImageResource(R.drawable.image_1);
             total = model.getPrice();
         }else {
             finish();

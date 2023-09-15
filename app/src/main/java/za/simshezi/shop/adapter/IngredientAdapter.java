@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -71,7 +72,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
     public static class IngredientViewHolder extends RecyclerView.ViewHolder {
         private IngredientModel ingredient;
         private TextView tvName, tvPrice, tvCount;
-        private FloatingActionButton btnRemove, btnAdd;
+        private ImageButton btnRemove, btnAdd;
 
         public IngredientViewHolder(@NonNull View itemView) {
             super(itemView);

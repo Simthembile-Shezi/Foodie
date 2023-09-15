@@ -9,7 +9,7 @@ public class OrdersData {
     public List<OrderModel> getData() {
         List<OrderModel> list = new ArrayList<>();
         for(int i = 0; i < 10; i++){
-            list.add(new OrderModel("orderId","Shop Name", "02/06/2023", 3,14.9f, true, new byte[0]));
+            list.add(new OrderModel("orderId","Shop "+i, "02/06/2023", i,14.9f * i, "Complete", new byte[0]));
         }
         return list;
     }

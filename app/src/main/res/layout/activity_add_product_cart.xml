@@ -14,7 +14,6 @@
         android:layout_height="100sp"
         android:maxWidth="100sp"
         android:maxHeight="100sp"
-        app:layout_constraintBottom_toTopOf="@+id/lstIngredients"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@drawable/ic_launcher_background" />
@@ -23,9 +22,8 @@
         android:id="@+id/tvAddProductCartName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="5dp"
         android:text="@string/default_name"
-        app:layout_constraintEnd_toStartOf="@+id/imgAddProductCart"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imgAddProductCart" />
 
@@ -35,43 +33,37 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="@string/default_description"
-        app:layout_constraintEnd_toStartOf="@+id/imgAddProductCart"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvAddProductCartName" />
+
+    <TextView
+        android:id="@+id/tvAddProductCartPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/default_price"
+        app:layout_constraintBottom_toBottomOf="@+id/imgAddProductCart"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvAddProductCartDescription" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/lstIngredients"
         android:layout_width="match_parent"
-        android:layout_height="600sp"
+        android:layout_height="0dp"
         android:layout_marginBottom="5dp"
-        app:layout_constraintBottom_toTopOf="@+id/tvAddProductCartPrice"
+        app:layout_constraintBottom_toTopOf="@+id/btnAddProductCart"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgAddProductCart">
 
     </androidx.recyclerview.widget.RecyclerView>
 
-    <TextView
-        android:id="@+id/tvAddProductCartPrice"
+    <Button
+        android:id="@+id/btnAddProductCart"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:text="@string/default_price"
-        app:layout_constraintBottom_toTopOf="@+id/btnAddProductCart"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tvAddProductPriceLabel" />
-
-    <TextView
-        android:id="@+id/tvAddProductPriceLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/total_price"
-        app:layout_constraintBottom_toTopOf="@+id/btnAddProductCart"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/btnAddProductCart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
         android:onClick="addProductCartClicked"
         android:text="@string/button_add"
         app:layout_constraintBottom_toBottomOf="parent"

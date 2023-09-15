@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -26,7 +27,7 @@ import za.simshezi.shop.mock.ShopData;
 import za.simshezi.shop.model.ShopModel;
 import za.simshezi.shop.style.ShopItemDecoration;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements SearchView.OnQueryTextListener{
     private FloatingActionButton btnFilter;
     private SearchView searchView;
     private RecyclerView lstShops;
@@ -72,18 +73,7 @@ public class HomeFragment extends Fragment {
         lstShops.setLayoutManager(layoutManager);
         lstShops.addItemDecoration(decoration);
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                filter(newText);
-                return false;
-            }
-        });
+        searchView.setOnQueryTextListener(this);
     }
     private void filter(String text) {
         // creating a new array list to filter shops.
@@ -99,5 +89,17 @@ public class HomeFragment extends Fragment {
         } else {
             adapter.filterList(filtered);
         }
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String s) {
+        filter(s);
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String s) {
+        filter(s);
+        return false;
     }
 }

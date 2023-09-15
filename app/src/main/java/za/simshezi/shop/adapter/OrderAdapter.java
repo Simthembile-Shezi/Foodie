@@ -61,7 +61,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         public void setupOrder(OrderModel model) {
             this.model = model;
             tvName.setText(String.format("%s", model.getName()));
-            tvStatus.setText(String.format("%s", model.isStatus()));
+            tvStatus.setText(String.format("%s", model.getStatus()));
             tvItems.setText(String.format("%d Items", model.getItems()));
             tvDate.setText(String.format("%s", model.getDate()));
             tvPrice.setText(String.format("R %s", model.getPrice()));

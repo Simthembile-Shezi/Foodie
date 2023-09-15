@@ -25,7 +25,7 @@ import za.simshezi.shop.model.ProductModel;
 
 public class CartFragment extends Fragment {
     private RecyclerView lstProducts;
-    private TextView tvName, tvSubtotal, tvFees, tvTotal;
+    private TextView tvName, tvSubtotal, tvFees, tvTotal, tvOrderSummery;
     private ImageView imgShop;
     private SerializableModel model;
     private List<ProductModel> list;
@@ -49,6 +49,7 @@ public class CartFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         lstProducts = view.findViewById(R.id.lstCart);
         tvName = view.findViewById(R.id.tvCartShopName);
+        tvOrderSummery = view.findViewById(R.id.tvOrderSummery);
         tvSubtotal = view.findViewById(R.id.tvCartSubTotalAmount);
         tvFees = view.findViewById(R.id.tvCartFeesAmount);
         tvTotal = view.findViewById(R.id.tvCartTotalAmount);
@@ -74,6 +75,7 @@ public class CartFragment extends Fragment {
             lstProducts.setLayoutManager(layoutManager);
         }else {
             tvName.setText("Cart is currently empty");
+            tvOrderSummery.setText("");
             imgShop.setImageResource(0);
         }
     }
