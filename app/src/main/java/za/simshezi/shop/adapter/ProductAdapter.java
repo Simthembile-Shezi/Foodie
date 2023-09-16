@@ -95,7 +95,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             if(data != null){
                 imgProduct.setImageBitmap(ImagesAPI.convertToBitmap(data));
             }
-            imgProduct.setImageResource(R.drawable.image_6);
+            imgProduct.setImageResource(R.drawable.image_5);
             tvName.setText(product.getName());
             tvDescription.setText(product.getDescription());
             tvPrice.setText(String.format("R %s", product.getPrice()));

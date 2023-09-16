@@ -57,21 +57,23 @@ public class ShopProductActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == REQ_CODE && resultCode == Activity.RESULT_OK && data != null){
+        if (requestCode == REQ_CODE && resultCode == Activity.RESULT_OK && data != null) {
             ProductModel model = (ProductModel) data.getSerializableExtra("product");
-            if(model != null){
+            if (model != null) {
+                if (btnCart.getVisibility() == View.GONE) {
+                    btnCart.setVisibility(View.VISIBLE);
+                }
                 cart.add(model);
                 btnCart.setText(String.format("R %s", cart.getPrice()));
             }
         }
     }
 
-    private void build(){
+    private void build() {
         Intent data = getIntent();
-        ShopModel shop = (ShopModel) data.getSerializableExtra("shop");
+        cart = (CartModel) data.getSerializableExtra("cart");
         //products = api.getProducts(shop.getShopId());
         products = new ProductsData().getData();
-        cart = new CartModel(shop);
         adapter = new ProductAdapter(products, view -> {
             Intent intent = new Intent(this, AddProductCartActivity.class);
             intent.putExtra("product", adapter.product);
@@ -85,11 +87,14 @@ public class ShopProductActivity extends AppCompatActivity {
         lstProducts.addItemDecoration(decoration);
         //imgShop.setImageBitmap(ImagesAPI.convertToBitmap(shop.getImage()));
         imgShop.setImageResource(R.drawable.icon);
-        tvName.setText(shop.getName());
+        tvName.setText(cart.getShop());
+        btnCart.setVisibility(View.GONE);
     }
-    public void onCartClicked(View view){
+
+    public void onCartClicked(View view) {
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("cart", cart);
         startActivity(intent);
+        finish();
     }
 }

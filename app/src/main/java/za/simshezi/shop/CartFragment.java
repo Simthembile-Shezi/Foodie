@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,6 +27,7 @@ import za.simshezi.shop.model.ProductModel;
 public class CartFragment extends Fragment {
     private RecyclerView lstProducts;
     private TextView tvName, tvSubtotal, tvFees, tvTotal, tvOrderSummery;
+    private ConstraintLayout constraintEmptyCart, constraintCart;
     private ImageView imgShop;
     private SerializableModel model;
     private List<ProductModel> list;
@@ -54,10 +56,14 @@ public class CartFragment extends Fragment {
         tvFees = view.findViewById(R.id.tvCartFeesAmount);
         tvTotal = view.findViewById(R.id.tvCartTotalAmount);
         imgShop = view.findViewById(R.id.imgCartShopLogo);
+        constraintEmptyCart = view.findViewById(R.id.layoutEmptyCart);
+        constraintCart = view.findViewById(R.id.layoutCart);
         build();
     }
     private void build(){
         if(model != null) {
+            constraintEmptyCart.setVisibility(View.GONE);
+            constraintCart.setVisibility(View.VISIBLE);
             CartModel cart = (CartModel) model.getModel();
             float fees = cart.getPrice() * 0.05f;
             list = cart.getList();
@@ -74,9 +80,8 @@ public class CartFragment extends Fragment {
             lstProducts.setAdapter(adapter);
             lstProducts.setLayoutManager(layoutManager);
         }else {
-            tvName.setText("Cart is currently empty");
-            tvOrderSummery.setText("");
-            imgShop.setImageResource(0);
+            constraintCart.setVisibility(View.GONE);
+            constraintEmptyCart.setVisibility(View.VISIBLE);
         }
     }
 }

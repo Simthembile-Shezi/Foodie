@@ -1,5 +1,6 @@
 package za.simshezi.shop;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,20 +21,28 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import za.simshezi.shop.adapter.ShopAdapter;
 import za.simshezi.shop.api.FirebaseAPI;
 import za.simshezi.shop.mock.ShopData;
+import za.simshezi.shop.model.CartModel;
+import za.simshezi.shop.model.SerializableModel;
 import za.simshezi.shop.model.ShopModel;
 import za.simshezi.shop.style.ShopItemDecoration;
 
-public class HomeFragment extends Fragment implements SearchView.OnQueryTextListener{
+public class HomeFragment extends Fragment implements SearchView.OnQueryTextListener {
     private FloatingActionButton btnFilter;
     private SearchView searchView;
     private RecyclerView lstShops;
     private List<ShopModel> shops;
     private ShopAdapter adapter;
     private FirebaseAPI api;
+    private SerializableModel model;
+
+    public void setModel(SerializableModel model) {
+        this.model = model;
+    }
 
     public HomeFragment() {
         //api = FirebaseAPI.getInstance();
@@ -64,7 +73,18 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
     private void build() {
         adapter = new ShopAdapter(shops, view -> {
             Intent intent = new Intent(getContext(), ShopProductActivity.class);
-            intent.putExtra("shop", adapter.shop);
+            ShopModel shop = adapter.shop;
+            if (model != null) {
+                CartModel cart = (CartModel) model.getModel();
+                if (Objects.equals(cart.getShop(), shop.getName())) {
+                    intent.putExtra("cart", cart);
+                } else {
+                    intent.putExtra("cart", new CartModel(shop));
+                    Toast.makeText(getContext(), String.format("Incomplete order from %s will be removed", cart.getShop()), Toast.LENGTH_LONG).show();
+                }
+            } else {
+                intent.putExtra("cart", new CartModel(shop));
+            }
             startActivity(intent);
         });
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -75,6 +95,7 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
 
         searchView.setOnQueryTextListener(this);
     }
+
     private void filter(String text) {
         // creating a new array list to filter shops.
         ArrayList<ShopModel> filtered = new ArrayList<>();

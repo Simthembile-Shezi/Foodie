@@ -9,7 +9,7 @@
 
     <TextView
         android:id="@+id/tvLoginNewAccount"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:onClick="onNewAccountClicked"
         android:text="@string/no_account"
@@ -22,10 +22,11 @@
 
     <TextView
         android:id="@+id/tvLoginOrSignup"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/action_sign_in"
         android:textSize="34sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -81,8 +82,10 @@
 
     <Button
         android:id="@+id/btnLogin"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginEnd="100dp"
         android:onClick="onLoginClicked"
         android:text="@string/action_sign_in_short"
         app:layout_constraintBottom_toBottomOf="parent"

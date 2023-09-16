@@ -51,15 +51,16 @@ public class AddProductCartActivity extends AppCompatActivity {
         //api = FirebaseAPI.getInstance();
         build();
     }
-    private void build(){
+
+    private void build() {
         Intent intent = getIntent();
         model = (ProductModel) intent.getSerializableExtra("product");
         //ingredients = api.getIngredients(model.getProductId());
         ingredients = new IngredientsData().getData();
         adapter = new IngredientAdapter(ingredients, view -> {
             total = model.getPrice();
-            for(IngredientModel model: IngredientAdapter.ingredients){
-                if(model.getCount() > 0)
+            for (IngredientModel model : IngredientAdapter.ingredients) {
+                if (model.getCount() > 0)
                     total += (model.getPrice() * model.getCount());
             }
             btnAddCart.setText(String.format("Add : R %s", total));
@@ -69,15 +70,15 @@ public class AddProductCartActivity extends AppCompatActivity {
         lstIngredients.setAdapter(adapter);
         lstIngredients.setLayoutManager(layoutManager);
         lstIngredients.addItemDecoration(decoration);
-        if(model != null){
+        if (model != null) {
             tvName.setText(model.getName());
             tvDescription.setText(model.getDescription());
             tvPrice.setText(String.format("R %s", model.getPrice()));
             btnAddCart.setText(String.format("Add : R %s", model.getPrice()));
             //imgProduct.setImageBitmap(ImagesAPI.convertToBitmap(model.getImage()));
-            imgProduct.setImageResource(R.drawable.image_1);
+            imgProduct.setImageResource(R.drawable.image_5);
             total = model.getPrice();
-        }else {
+        } else {
             finish();
         }
     }
@@ -85,10 +86,10 @@ public class AddProductCartActivity extends AppCompatActivity {
     public void addProductCartClicked(View view) {
         Intent data = getIntent();
         ProductModel model = (ProductModel) data.getSerializableExtra("product");
-        if(model!=null) {
+        if (model != null) {
             List<IngredientModel> choices = new ArrayList<>();
-            for(IngredientModel ingredient: IngredientAdapter.ingredients){
-                if(ingredient.getCount() > 0){
+            for (IngredientModel ingredient : IngredientAdapter.ingredients) {
+                if (ingredient.getCount() > 0) {
                     choices.add(ingredient);
                 }
             }

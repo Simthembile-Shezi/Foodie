@@ -9,6 +9,10 @@
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -16,7 +20,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -41,14 +46,14 @@
                     android:layout_weight="1"
                     android:text="@string/default_price" />
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                <ImageButton
                     android:id="@+id/btnCartProductDelete"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:clickable="true"
-                    android:contentDescription="Delete"
-                    app:srcCompat="@android:drawable/ic_menu_delete" />
+                    android:contentDescription="@string/default_remove"
+                    app:srcCompat="@drawable/baseline_delete_24"
+                    tools:ignore="TouchTargetSizeCheck" />
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import za.simshezi.shop.model.SerializableModel;
 import za.simshezi.shop.model.CartModel;
 
 public class MainActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
+    private int finish = 0;
     private BottomNavigationView bottomNavigationView;
     private HomeFragment homeFragment = new HomeFragment();
     private CartFragment cartFragment = new CartFragment();
@@ -28,22 +30,21 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         setContentView(R.layout.activity_main);
         bottomNavigationView = findViewById(R.id.bottom_nav_view);
         bottomNavigationView.setOnItemSelectedListener(this);
-        bottomNavigationView.setSelectedItemId(R.id.home_dest);
         Intent intent = getIntent();
         CartModel cart = (CartModel) intent.getSerializableExtra("cart");
         if (cart != null) {
-            if (cartModel != null) {
-                if(cart.getShop().equals(cartModel.getShop()))
-                    cartModel.getList().addAll(cart.getList());
-            } else {
-                cartModel = cart;
-            }
+            cartModel = cart;
             cartFragment.setModel(() -> cartModel);
+            homeFragment.setModel(() -> cartModel);
+            bottomNavigationView.setSelectedItemId(R.id.cart_dest);
+        }else {
+            bottomNavigationView.setSelectedItemId(R.id.home_dest);
         }
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        finish = 0;
         int itemId = item.getItemId();
         if (itemId == R.id.home_dest) {
             getSupportFragmentManager()
@@ -71,5 +72,15 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish++;
+        if(finish == 2) {
+            finishAffinity();
+        }else {
+            Toast.makeText(this, "Press back again to exit the app", Toast.LENGTH_SHORT).show();
+        }
     }
 }
