@@ -17,6 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Cart is currently empty"
+            android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -33,6 +34,8 @@
             android:id="@+id/imgCartShopLogo"
             android:layout_width="60sp"
             android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
             android:maxWidth="100sp"
             android:maxHeight="100sp"
             app:layout_constraintBottom_toBottomOf="@+id/tvOrderSummery"
@@ -44,6 +47,8 @@
             android:id="@+id/tvCartShopName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
             android:text="@string/default_name"
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -53,6 +58,7 @@
             android:id="@+id/tvOrderSummery"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:text="Order Summery"
             app:layout_constraintStart_toStartOf="parent"
@@ -137,12 +143,15 @@
 
         </LinearLayout>
 
-        <ImageButton
+        <Button
             android:id="@+id/btnCheckOut"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:contentDescription="TODO"
-            android:src="@drawable/baseline_shopping_cart_24"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:contentDescription="@string/continue_to_checkout"
+            android:text="@string/continue_to_checkout"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

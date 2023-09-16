@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,6 +29,7 @@ public class CartFragment extends Fragment {
     private RecyclerView lstProducts;
     private TextView tvName, tvSubtotal, tvFees, tvTotal, tvOrderSummery;
     private ConstraintLayout constraintEmptyCart, constraintCart;
+    private Button btnCheckout;
     private ImageView imgShop;
     private SerializableModel model;
     private List<ProductModel> list;
@@ -58,6 +60,7 @@ public class CartFragment extends Fragment {
         imgShop = view.findViewById(R.id.imgCartShopLogo);
         constraintEmptyCart = view.findViewById(R.id.layoutEmptyCart);
         constraintCart = view.findViewById(R.id.layoutCart);
+        btnCheckout = view.findViewById(R.id.btnCheckOut);
         build();
     }
     private void build(){
