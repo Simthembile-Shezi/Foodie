@@ -53,7 +53,7 @@
                     android:layout_weight="1"
                     android:maxWidth="100sp"
                     android:maxHeight="100sp"
-                    app:srcCompat="@drawable/ic_launcher_background" />
+                    app:srcCompat="@drawable/baseline_fastfood_24" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

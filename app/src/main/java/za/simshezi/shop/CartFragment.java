@@ -75,7 +75,7 @@ public class CartFragment extends Fragment {
             tvFees.setText(String.format("R %s", fees));
             tvTotal.setText(String.format("R %s", (cart.getPrice() + fees)));
             //imgShop.setImageBitmap(ImagesAPI.convertToBitmap(cart.getShop().getImage()));
-            imgShop.setImageResource(R.drawable.image_1);
+            imgShop.setImageResource(R.drawable.baseline_fastfood_24);
             CartAdapter adapter = new CartAdapter(getContext(), list, (view) -> {
 
             });

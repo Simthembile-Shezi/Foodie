@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -28,6 +30,7 @@ public class LoginActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         edEmail = findViewById(R.id.edLoginEmail);
         edPassword = findViewById(R.id.edLoginPassword);
+
     }
 
     public void onForgotPasswordClicked(View view) {
@@ -41,9 +44,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onLoginClicked(View view) {
-        startActivity(new Intent(this, MainActivity.class));
+
+        //startActivity(new Intent(this, MainActivity.class));
         //Simshezi8@gmail.com SimShezi
-        /*String email = edEmail.getText().toString().trim();
+        String email = edEmail.getText().toString().trim();
         String password = edPassword.getText().toString().trim();
         if (TextUtils.isEmpty(email)) {
             Toast.makeText(this, "Enter email address", Toast.LENGTH_SHORT).show();
@@ -56,14 +60,19 @@ public class LoginActivity extends AppCompatActivity {
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(LoginActivity.this, task -> {
                     if (task.isSuccessful()) {
+                        SharedPreferences writePreferences = getSharedPreferences("login", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = writePreferences.edit();
+                        editor.putString("email", email);
+                        editor.putString("password", password);
+                        editor.apply();
                         FirebaseUser user = mAuth.getCurrentUser();
                         Intent intent = new Intent(this, MainActivity.class);
                         intent.putExtra("user", user);
                         startActivity(intent);
                     } else {
                         // Login failed
-                        Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Login failed.", Toast.LENGTH_SHORT).show();
                     }
-                });*/
+                });
     }
 }

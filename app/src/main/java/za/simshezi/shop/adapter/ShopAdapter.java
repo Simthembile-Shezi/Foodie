@@ -94,7 +94,7 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ShopViewHolder
                 Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
                 imgShop.setImageBitmap(bitmap);
             }
-            imgShop.setImageResource(R.drawable.icon);
+            imgShop.setImageResource(R.drawable.baseline_fastfood_24);
             tvName.setText(model.getName());
             tvRating.setText(String.format("%s", model.getRating()));
         }

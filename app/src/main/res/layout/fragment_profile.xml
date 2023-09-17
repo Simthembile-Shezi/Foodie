@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/theme"
     tools:context=".ProfileFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -11,26 +12,26 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/tvProfileFullname"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/full_name"
             android:textSize="34sp"
-            app:layout_constraintEnd_toStartOf="@+id/imageView"
+            app:layout_constraintEnd_toStartOf="@+id/imgProfile"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/tvProfileEmail"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/email"
-            app:layout_constraintEnd_toStartOf="@+id/imageView"
+            app:layout_constraintEnd_toStartOf="@+id/imgProfile"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            app:layout_constraintTop_toBottomOf="@+id/tvProfileFullname" />
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/imgProfile"
             android:layout_width="100sp"
             android:layout_height="100sp"
             android:src="@drawable/baseline_account_circle_24"
@@ -46,7 +47,7 @@
             android:layout_marginEnd="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView">
+            app:layout_constraintTop_toBottomOf="@+id/imgProfile">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -55,6 +56,7 @@
                 android:background="@color/colorAccent">
 
                 <LinearLayout
+                    android:id="@+id/layoutProfileCards"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -76,6 +78,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/layoutProfileWallet"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -97,6 +100,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/layoutProfilePromotions"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
@@ -118,6 +122,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/layoutProfileHelp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
@@ -139,6 +144,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/layoutProfileAbout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
@@ -160,6 +166,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/layoutProfilePrivacy"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
@@ -181,6 +188,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/layoutProfileSettings"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
@@ -205,7 +213,7 @@
         </androidx.cardview.widget.CardView>
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/btnSignOut"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Sign Out"
