@@ -3,30 +3,41 @@ package za.simshezi.shop.model;
 import java.io.Serializable;
 
 public class ShopModel implements Serializable {
-    private String shopId;
+    private String id;
     private String name;
     private String email;
     private String cellphone;
-    private float rating;
-    private boolean status;
+    private Double rating;
+    private String status;
+    private String address;
     private byte[] image;
 
-    public ShopModel(String shopId, String name, String email, String cellphone, float rating, boolean status, byte[] image) {
-        this.shopId = shopId;
+    public ShopModel() {
+    }
+
+    public ShopModel(String name, String email, String cellphone, Double rating, String status, String address, byte[] image) {
         this.name = name;
         this.email = email;
         this.cellphone = cellphone;
         this.rating = rating;
         this.status = status;
+        this.address = address;
         this.image = image;
     }
 
-    public String getShopId() {
-        return shopId;
+    public ShopModel(String name, String cellphone, String address, byte[] image) {
+        this.name = name;
+        this.cellphone = cellphone;
+        this.address = address;
+        this.image = image;
     }
 
-    public void setShopId(String shopId) {
-        this.shopId = shopId;
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -35,30 +46,6 @@ public class ShopModel implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public float getRating() {
-        return rating;
-    }
-
-    public void setRating(float rating) {
-        this.rating = rating;
-    }
-
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
-
-    public void setImage(byte[] image) {
-        this.image = image;
-    }
-
-    public byte[] getImage() {
-        return image;
     }
 
     public String getEmail() {
@@ -75,5 +62,37 @@ public class ShopModel implements Serializable {
 
     public void setCellphone(String cellphone) {
         this.cellphone = cellphone;
+    }
+
+    public Double getRating() {
+        return rating;
+    }
+
+    public void setRating(Double rating) {
+        this.rating = rating;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 }

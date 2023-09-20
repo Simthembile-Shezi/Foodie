@@ -1,6 +1,7 @@
 package za.simshezi.shop.api;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -10,8 +11,11 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import za.simshezi.shop.model.CartModel;
 import za.simshezi.shop.model.IngredientModel;
 import za.simshezi.shop.model.ProductModel;
 import za.simshezi.shop.model.ShopModel;
@@ -21,8 +25,6 @@ public class FirebaseAPI {
     private FirebaseStorage storage;
     private StorageReference storageRef;
     private CollectionReference restaurantsCollection;
-    private CollectionReference productsCollection;
-    private CollectionReference ingredientsCollection;
     private CollectionReference ordersCollection;
     private static FirebaseAPI firebase;
 
@@ -31,8 +33,6 @@ public class FirebaseAPI {
         storage = FirebaseStorage.getInstance();
         storageRef = storage.getReference();
         restaurantsCollection = db.collection("restaurants");
-        productsCollection = db.collection("products");
-        ingredientsCollection = db.collection("ingredients");
         ordersCollection = db.collection("orders");
     }
 
@@ -43,80 +43,22 @@ public class FirebaseAPI {
         return firebase;
     }
 
-    public List<ShopModel> getShops() {
-        List<ShopModel> shops = new ArrayList<>();
+    public void getOrders(String cellphone, OnSuccessListener<QuerySnapshot> callback) {
+        Query query = ordersCollection.whereEqualTo("cellphone", cellphone);
+        executeQuery(query, callback);
+    }
+
+    public void getShops(OnSuccessListener<QuerySnapshot> callback) {
         Query query = restaurantsCollection;
-        executeDocumentListQuery(query, list -> {
-            if (list != null) {
-                for (DocumentSnapshot documentSnapshot : list) {
-                    if (documentSnapshot != null && documentSnapshot.exists()) {
-                        String id = documentSnapshot.getId();
-                        String name = documentSnapshot.getString("name");
-                        String cellphone = documentSnapshot.getString("cellphone");
-                        String email = documentSnapshot.getString("email");
-                        boolean status = documentSnapshot.getBoolean("status");
-                        double rating = documentSnapshot.getDouble("rating");
-                        getShopImage(id, bytes -> {
-                            if (bytes != null) {
-                                ShopModel model = new ShopModel(id, name, email, cellphone, (float) rating, status, bytes);
-                                shops.add(model);
-                            }
-                        });
-                    }
-                }
-            }
-        });
-        return shops;
+        executeQuery(query, callback);
     }
 
-    public List<ProductModel> getProducts(String shopId) {
-        List<ProductModel> products = new ArrayList<>();
-        Query query = productsCollection.whereEqualTo("shopId", shopId);
-        executeDocumentListQuery(query, list ->{
-            if(list != null){
-                for(DocumentSnapshot documentSnapshot: list){
-                    if (documentSnapshot != null && documentSnapshot.exists()) {
-                        String productId = documentSnapshot.getId();
-                        String name = documentSnapshot.getString("name");
-                        String description = documentSnapshot.getString("description");
-                        double price = documentSnapshot.getDouble("price");
-                        getProductImage(productId, bytes -> {
-                            if (bytes != null) {
-                                ProductModel model = new ProductModel(productId, shopId, name, description, (float) price, bytes);
-                                products.add(model);
-                            }
-                        });
-                    }
-                }
-            }
-        });
-        return products;
-    }
-
-    public List<IngredientModel> getIngredients(String productId) {
-        List<IngredientModel> ingredients = new ArrayList<>();
-        Query query = ingredientsCollection.whereEqualTo("productId", productId);
-        executeDocumentListQuery(query, list -> {
-            if(list != null){
-                for(DocumentSnapshot documentSnapshot: list){
-                    if (documentSnapshot != null && documentSnapshot.exists()) {
-                        String ingredientId = documentSnapshot.getId();
-                        String name = documentSnapshot.getString("name");
-                        double price = documentSnapshot.getDouble("price");
-                        ingredients.add(new IngredientModel(ingredientId, productId, name, (float) price));
-                    }
-                }
-            }
-        });
-        return ingredients;
-    }
-
-    private void executeDocumentListQuery(Query query, OnSuccessListener<List<DocumentSnapshot>> callback) {
+    private void executeQuery(Query query, OnSuccessListener<QuerySnapshot> callback) {
         query.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 QuerySnapshot querySnapshot = task.getResult();
                 if (querySnapshot != null && !querySnapshot.isEmpty()) {
-                    callback.onSuccess(querySnapshot.getDocuments());
+                    callback.onSuccess(querySnapshot);
                 } else {
                     callback.onSuccess(null); // No matching documents found
                 }
@@ -142,5 +84,22 @@ public class FirebaseAPI {
         imageRef.getBytes(MAX_DOWNLOAD_SIZE)
                 .addOnSuccessListener(bytes -> callback.onSuccess(bytes))
                 .addOnFailureListener(exception -> callback.onSuccess(null));
+    }
+
+    public void setOrder(CartModel cart, OnSuccessListener<Boolean> callback) {
+        Map<String, Object> order = new HashMap<>();
+        order.put("customer", cart.getCustomer());
+        order.put("items", cart.getList().size());
+        order.put("payment", cart.getPayment());
+        order.put("shopId", cart.getShop().getId());
+        order.put("time", Timestamp.now());
+        order.put("price", cart.getPrice());
+
+        ordersCollection.add(order)
+                .addOnSuccessListener(documentReference -> {
+                   callback.onSuccess(true);
+                }).addOnFailureListener(e -> {
+                    callback.onSuccess(false);
+                });
     }
 }

@@ -9,7 +9,7 @@ public class ShopData {
     public List<ShopModel> getData() {
         List<ShopModel> list = new ArrayList<>();
         for (int i = 0; i <= 10; i++) {
-            list.add(new ShopModel("shopId", "Shop " + i, "shop@email.org", "0785469321", 0.5f * i, true, new byte[0]));
+            //list.add(new ShopModel("shopId", "Shop " + i, "shop@email.org", "0785469321", 0.5 * i, "Open", new byte[0]));
         }
         return list;
     }

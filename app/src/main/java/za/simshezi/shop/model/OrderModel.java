@@ -1,70 +1,62 @@
 package za.simshezi.shop.model;
 
-public class OrderModel {
-    private String orderId;
-    private String name;
-    private String date;
-    private int items;
-    private float price;
-    private String status;
-    private byte[] image;
+import com.google.firebase.Timestamp;
 
-    public OrderModel(String orderId, String name, String date, int items, float price, String status, byte[] image) {
-        this.orderId = orderId;
-        this.name = name;
-        this.date = date;
+import java.io.Serializable;
+
+public class OrderModel implements Serializable {
+    private String shopId;
+    private String customer;
+    private String cellphone;
+    private String payment;
+    private String status;
+    private Timestamp time;
+    private Integer items;
+    private Double price;
+
+    public OrderModel() {
+    }
+
+    public OrderModel(String shopId, String customer, String cellphone, String payment, Timestamp time, Integer items, Double price) {
+        this.shopId = shopId;
+        this.customer = customer;
+        this.cellphone = cellphone;
+        this.payment = payment;
+        this.time = time;
         this.items = items;
         this.price = price;
-        this.status = status;
-        this.image = image;
     }
 
     public String getShopId() {
-        return orderId;
+        return shopId;
     }
 
     public void setShopId(String shopId) {
-        this.orderId = shopId;
+        this.shopId = shopId;
     }
 
-    public String getName() {
-        return name;
+    public String getCustomer() {
+        return customer;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCustomer(String customer) {
+        this.customer = customer;
     }
 
-    public String getDate() {
-        return date;
+    public String getCellphone() {
+        return cellphone;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setCellphone(String cellphone) {
+        this.cellphone = cellphone;
     }
 
-    public int getItems() {
-        return items;
+    public String getPayment() {
+        return payment;
     }
 
-    public void setItems(int items) {
-        this.items = items;
-    }
-
-    public float getPrice() {
-        return price;
-    }
-
-    public void setPrice(float price) {
-        this.price = price;
-    }
-
-    public String getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(String orderId) {
-        this.orderId = orderId;
+    public void setPayment(String payment) {
+        this.payment = payment;
     }
 
     public String getStatus() {
@@ -75,11 +67,27 @@ public class OrderModel {
         this.status = status;
     }
 
-    public byte[] getImage() {
-        return image;
+    public Timestamp getTime() {
+        return time;
     }
 
-    public void setImage(byte[] image) {
-        this.image = image;
+    public void setTime(Timestamp time) {
+        this.time = time;
+    }
+
+    public Integer getItems() {
+        return items;
+    }
+
+    public void setItems(Integer items) {
+        this.items = items;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 }

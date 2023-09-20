@@ -1,13 +1,10 @@
 package za.simshezi.shop;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -18,14 +15,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import za.simshezi.shop.adapter.ShopAdapter;
 import za.simshezi.shop.api.FirebaseAPI;
-import za.simshezi.shop.mock.ShopData;
 import za.simshezi.shop.model.CartModel;
 import za.simshezi.shop.model.SerializableModel;
 import za.simshezi.shop.model.ShopModel;
@@ -45,10 +43,7 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
     }
 
     public HomeFragment() {
-        //api = FirebaseAPI.getInstance();
-        //shops = api.getShops();
 
-        shops = new ShopData().getData();
     }
 
     @Override
@@ -65,35 +60,48 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
         build();
     }
 
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-    }
-
     private void build() {
-        adapter = new ShopAdapter(shops, view -> {
-            Intent intent = new Intent(getContext(), ShopProductActivity.class);
-            ShopModel shop = adapter.shop;
-            if (model != null) {
-                CartModel cart = (CartModel) model.getModel();
-                if (Objects.equals(cart.getShop(), shop.getName())) {
-                    intent.putExtra("cart", cart);
-                } else {
-                    intent.putExtra("cart", new CartModel(shop));
-                    Toast.makeText(getContext(), String.format("Incomplete order from %s will be removed", cart.getShop()), Toast.LENGTH_LONG).show();
-                }
-            } else {
-                intent.putExtra("cart", new CartModel(shop));
-            }
-            startActivity(intent);
-        });
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-        ShopItemDecoration decoration = new ShopItemDecoration();
-        lstShops.setAdapter(adapter);
-        lstShops.setLayoutManager(layoutManager);
-        lstShops.addItemDecoration(decoration);
+        shops = new ArrayList<>();
+        api = FirebaseAPI.getInstance();
+        api.getShops((DocumentSnapshot -> {
+            if(DocumentSnapshot != null){
+                for (QueryDocumentSnapshot document : DocumentSnapshot){
+                    ShopModel shop = document.toObject(ShopModel.class);
+                    shop.setId(document.getId());
+                    api.getShopImage(shop.getId(), bytes -> {
+                        if(bytes != null){
+                            shop.setImage(bytes);
+                        }
+                        shops.add(shop);
+                        if(DocumentSnapshot.size() == shops.size()){
+                            adapter = new ShopAdapter(shops, view -> {
+                                Intent intent = new Intent(getContext(), ShopProductActivity.class);
+                                ShopModel shopModel = adapter.shop;
+                                if (model != null) {
+                                    CartModel cart = (CartModel) model.getModel();
+                                    if (Objects.equals(cart.getShop(), shopModel.getName())) {
+                                        intent.putExtra("cart", cart);
+                                    } else {
+                                        intent.putExtra("cart", new CartModel(shopModel));
+                                        Toast.makeText(getContext(), String.format("Incomplete order from %s will be removed", cart.getShop()), Toast.LENGTH_LONG).show();
+                                    }
+                                } else {
+                                    intent.putExtra("cart", new CartModel(shopModel));
+                                }
+                                startActivity(intent);
+                            });
+                            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+                            ShopItemDecoration decoration = new ShopItemDecoration();
+                            lstShops.setAdapter(adapter);
+                            lstShops.setLayoutManager(layoutManager);
+                            lstShops.addItemDecoration(decoration);
 
-        searchView.setOnQueryTextListener(this);
+                            searchView.setOnQueryTextListener(HomeFragment.this);
+                        }
+                    });
+                }
+            }
+        }));
     }
 
     private void filter(String text) {

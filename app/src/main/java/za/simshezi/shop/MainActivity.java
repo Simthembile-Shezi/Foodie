@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         CartModel cart = (CartModel) intent.getSerializableExtra("cart");
         if (cart != null) {
             cartModel = cart;
+            cartModel.setCustomer("Simthembile Shezi");
             cartFragment.setModel(() -> cartModel);
             homeFragment.setModel(() -> cartModel);
             bottomNavigationView.setSelectedItemId(R.id.cart_dest);

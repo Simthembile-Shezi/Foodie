@@ -1,5 +1,6 @@
 package za.simshezi.shop;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,11 +16,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import za.simshezi.shop.adapter.CartAdapter;
+import za.simshezi.shop.api.FirebaseAPI;
 import za.simshezi.shop.api.ImagesAPI;
 import za.simshezi.shop.model.SerializableModel;
 import za.simshezi.shop.model.CartModel;
@@ -33,6 +36,7 @@ public class CartFragment extends Fragment {
     private ImageView imgShop;
     private SerializableModel model;
     private List<ProductModel> list;
+    private FirebaseAPI api;
 
     public void setModel(SerializableModel model) {
         this.model = model;
@@ -65,23 +69,38 @@ public class CartFragment extends Fragment {
     }
     private void build(){
         if(model != null) {
+            api = FirebaseAPI.getInstance();
             constraintEmptyCart.setVisibility(View.GONE);
             constraintCart.setVisibility(View.VISIBLE);
             CartModel cart = (CartModel) model.getModel();
             float fees = cart.getPrice() * 0.05f;
             list = cart.getList();
-            tvName.setText(cart.getShop());
+            tvName.setText(cart.getShop().getName());
             tvSubtotal.setText(String.format("R %s", cart.getPrice()));
             tvFees.setText(String.format("R %s", fees));
             tvTotal.setText(String.format("R %s", (cart.getPrice() + fees)));
-            //imgShop.setImageBitmap(ImagesAPI.convertToBitmap(cart.getShop().getImage()));
-            imgShop.setImageResource(R.drawable.baseline_fastfood_24);
+            byte[] image = cart.getShop().getImage();
+            if(image != null){
+                imgShop.setImageBitmap(ImagesAPI.convertToBitmap(image));
+            }else
+                imgShop.setImageResource(R.drawable.baseline_fastfood_24);
             CartAdapter adapter = new CartAdapter(getContext(), list, (view) -> {
 
             });
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
             lstProducts.setAdapter(adapter);
             lstProducts.setLayoutManager(layoutManager);
+            btnCheckout.setOnClickListener(view -> {
+                cart.setPayment("Cash");
+                api.setOrder(cart, bool ->{
+                    if(bool){
+                        Toast.makeText(getContext(), "Order placed", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(requireContext(), MainActivity.class);
+                        startActivity(intent);
+                    }else
+                        Toast.makeText(getContext(), "Try again", Toast.LENGTH_SHORT).show();
+                });
+            });
         }else {
             constraintCart.setVisibility(View.GONE);
             constraintEmptyCart.setVisibility(View.VISIBLE);

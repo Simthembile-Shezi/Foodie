@@ -6,6 +6,8 @@ import java.util.List;
 
 public class CartModel implements Serializable {
     private final ShopModel shop;
+    private String customer;
+    private String payment;
     private List<ProductModel> list;
 
     public CartModel(ShopModel shop) {
@@ -31,7 +33,23 @@ public class CartModel implements Serializable {
         return total;
     }
 
-    public String getShop() {
-        return shop.getName();
+    public ShopModel getShop() {
+        return shop;
+    }
+
+    public String getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(String customer) {
+        this.customer = customer;
+    }
+
+    public String getPayment() {
+        return payment;
+    }
+
+    public void setPayment(String payment) {
+        this.payment = payment;
     }
 }

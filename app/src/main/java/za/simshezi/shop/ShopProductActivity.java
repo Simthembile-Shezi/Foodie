@@ -87,7 +87,7 @@ public class ShopProductActivity extends AppCompatActivity {
         lstProducts.addItemDecoration(decoration);
         //imgShop.setImageBitmap(ImagesAPI.convertToBitmap(shop.getImage()));
         imgShop.setImageResource(R.drawable.baseline_fastfood_24);
-        tvName.setText(cart.getShop());
+        tvName.setText(cart.getShop().getName());
         btnCart.setVisibility(View.GONE);
     }
 
