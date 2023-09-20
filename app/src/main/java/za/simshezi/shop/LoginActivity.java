@@ -18,11 +18,16 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+
+import za.simshezi.shop.api.FirebaseAPI;
+import za.simshezi.shop.model.UserModel;
 
 public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private EditText edEmail, edPassword;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,10 +70,16 @@ public class LoginActivity extends AppCompatActivity {
                         editor.putString("email", email);
                         editor.putString("password", password);
                         editor.apply();
-                        FirebaseUser user = mAuth.getCurrentUser();
-                        Intent intent = new Intent(this, MainActivity.class);
-                        intent.putExtra("user", user);
-                        startActivity(intent);
+                        FirebaseAPI.getInstance().getCustomer(email, DocumentSnapshot -> {
+                            UserModel user = new UserModel();
+                            for (QueryDocumentSnapshot document : DocumentSnapshot) {
+                                user = document.toObject(UserModel.class);
+                                break;
+                            }
+                            Intent intent = new Intent(this, MainActivity.class);
+                            intent.putExtra("user", user);
+                            startActivity(intent);
+                        });
                     } else {
                         // Login failed
                         Toast.makeText(LoginActivity.this, "Login failed.", Toast.LENGTH_SHORT).show();

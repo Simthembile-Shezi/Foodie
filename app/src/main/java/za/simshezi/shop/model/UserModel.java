@@ -1,9 +1,14 @@
 package za.simshezi.shop.model;
 
-public class UserModel {
+import java.io.Serializable;
+
+public class UserModel implements Serializable {
     private String name;
     private String email;
     private String cellphone;
+
+    public UserModel() {
+    }
 
     public UserModel(String name, String email, String cellphone) {
         this.name = name;

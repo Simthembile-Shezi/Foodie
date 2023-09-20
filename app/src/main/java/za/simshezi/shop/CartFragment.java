@@ -67,22 +67,28 @@ public class CartFragment extends Fragment {
         btnCheckout = view.findViewById(R.id.btnCheckOut);
         build();
     }
-    private void build(){
-        if(model != null) {
+
+    private void build() {
+        if (model != null) {
             api = FirebaseAPI.getInstance();
-            constraintEmptyCart.setVisibility(View.GONE);
-            constraintCart.setVisibility(View.VISIBLE);
             CartModel cart = (CartModel) model.getModel();
-            float fees = cart.getPrice() * 0.05f;
+            if(cart.getList().isEmpty()){
+                constraintCart.setVisibility(View.GONE);
+                constraintEmptyCart.setVisibility(View.VISIBLE);
+                return;
+            }
+            double subtotal = cart.calculatePrice();
+            double fees = subtotal  * 0.05;
+            double total = subtotal + fees;
             list = cart.getList();
             tvName.setText(cart.getShop().getName());
-            tvSubtotal.setText(String.format("R %s", cart.getPrice()));
+            tvSubtotal.setText(String.format("R %s", subtotal));
             tvFees.setText(String.format("R %s", fees));
-            tvTotal.setText(String.format("R %s", (cart.getPrice() + fees)));
+            tvTotal.setText(String.format("R %s", total));
             byte[] image = cart.getShop().getImage();
-            if(image != null){
+            if (image != null) {
                 imgShop.setImageBitmap(ImagesAPI.convertToBitmap(image));
-            }else
+            } else
                 imgShop.setImageResource(R.drawable.baseline_fastfood_24);
             CartAdapter adapter = new CartAdapter(getContext(), list, (view) -> {
 
@@ -91,17 +97,14 @@ public class CartFragment extends Fragment {
             lstProducts.setAdapter(adapter);
             lstProducts.setLayoutManager(layoutManager);
             btnCheckout.setOnClickListener(view -> {
-                cart.setPayment("Cash");
-                api.setOrder(cart, bool ->{
-                    if(bool){
-                        Toast.makeText(getContext(), "Order placed", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(requireContext(), MainActivity.class);
-                        startActivity(intent);
-                    }else
-                        Toast.makeText(getContext(), "Try again", Toast.LENGTH_SHORT).show();
-                });
+                cart.setPrice(total);
+                Intent intent = new Intent(requireContext(), CheckoutActivity.class);
+                intent.putExtra("cart", cart);
+                startActivity(intent);
             });
-        }else {
+            constraintEmptyCart.setVisibility(View.GONE);
+            constraintCart.setVisibility(View.VISIBLE);
+        } else {
             constraintCart.setVisibility(View.GONE);
             constraintEmptyCart.setVisibility(View.VISIBLE);
         }

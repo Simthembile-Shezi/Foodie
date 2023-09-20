@@ -1,13 +1,16 @@
 package za.simshezi.shop.model;
 
+import com.google.firebase.firestore.auth.User;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CartModel implements Serializable {
-    private final ShopModel shop;
-    private String customer;
+    private ShopModel shop;
+    private UserModel user;
     private String payment;
+    private Double price;
     private List<ProductModel> list;
 
     public CartModel(ShopModel shop) {
@@ -15,8 +18,21 @@ public class CartModel implements Serializable {
         this.list = new ArrayList<>();
     }
 
+    public CartModel(UserModel user) {
+        this.user = user;
+        this.list = new ArrayList<>();
+    }
+
     public List<ProductModel> getList() {
         return list;
+    }
+
+    public void setShop(ShopModel shop) {
+        this.shop = shop;
+    }
+
+    public void setList(List<ProductModel> list) {
+        this.list = list;
     }
 
     public void add(ProductModel product) {
@@ -25,24 +41,27 @@ public class CartModel implements Serializable {
     public void remove(ProductModel product){
         list.remove(product);
     }
-    public float getPrice() {
-        float total = 0;
+    public double calculatePrice() {
+        double total = 0;
         for(ProductModel model: list){
             total += model.getPrice();
         }
         return total;
+    }
+    public Double getPrice() {
+        return price;
     }
 
     public ShopModel getShop() {
         return shop;
     }
 
-    public String getCustomer() {
-        return customer;
+    public UserModel getUser() {
+        return user;
     }
 
-    public void setCustomer(String customer) {
-        this.customer = customer;
+    public void setUser(UserModel user) {
+        this.user = user;
     }
 
     public String getPayment() {
@@ -51,5 +70,9 @@ public class CartModel implements Serializable {
 
     public void setPayment(String payment) {
         this.payment = payment;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 }

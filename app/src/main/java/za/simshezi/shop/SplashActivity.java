@@ -10,6 +10,10 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+
+import za.simshezi.shop.api.FirebaseAPI;
+import za.simshezi.shop.model.UserModel;
 
 public class SplashActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -27,10 +31,16 @@ public class SplashActivity extends AppCompatActivity {
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(SplashActivity.this, task -> {
                         if (task.isSuccessful()) {
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            Intent intent = new Intent(this, MainActivity.class);
-                            intent.putExtra("user", user);
-                            startActivity(intent);
+                            FirebaseAPI.getInstance().getCustomer(email, DocumentSnapshot -> {
+                                UserModel user = new UserModel();
+                                for (QueryDocumentSnapshot document : DocumentSnapshot) {
+                                    user = document.toObject(UserModel.class);
+                                    break;
+                                }
+                                Intent intent = new Intent(this, MainActivity.class);
+                                intent.putExtra("user", user);
+                                startActivity(intent);
+                            });
                         }
                     });
         }else {

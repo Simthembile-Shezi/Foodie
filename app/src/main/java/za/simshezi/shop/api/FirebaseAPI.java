@@ -26,6 +26,7 @@ public class FirebaseAPI {
     private StorageReference storageRef;
     private CollectionReference restaurantsCollection;
     private CollectionReference ordersCollection;
+    private CollectionReference customersCollection;
     private static FirebaseAPI firebase;
 
     private FirebaseAPI() {
@@ -33,6 +34,7 @@ public class FirebaseAPI {
         storage = FirebaseStorage.getInstance();
         storageRef = storage.getReference();
         restaurantsCollection = db.collection("restaurants");
+        customersCollection = db.collection("customers");
         ordersCollection = db.collection("orders");
     }
 
@@ -43,6 +45,10 @@ public class FirebaseAPI {
         return firebase;
     }
 
+    public void getCustomer(String email, OnSuccessListener<QuerySnapshot> callback) {
+        Query query = customersCollection.whereEqualTo("email", email);
+        executeQuery(query, callback);
+    }
     public void getOrders(String cellphone, OnSuccessListener<QuerySnapshot> callback) {
         Query query = ordersCollection.whereEqualTo("cellphone", cellphone);
         executeQuery(query, callback);
@@ -88,7 +94,8 @@ public class FirebaseAPI {
 
     public void setOrder(CartModel cart, OnSuccessListener<Boolean> callback) {
         Map<String, Object> order = new HashMap<>();
-        order.put("customer", cart.getCustomer());
+        order.put("customer", cart.getUser().getName());
+        order.put("cellphone", cart.getUser().getCellphone());
         order.put("items", cart.getList().size());
         order.put("payment", cart.getPayment());
         order.put("shopId", cart.getShop().getId());

@@ -14,6 +14,7 @@ import com.google.android.material.navigation.NavigationBarView;
 
 import za.simshezi.shop.model.SerializableModel;
 import za.simshezi.shop.model.CartModel;
+import za.simshezi.shop.model.UserModel;
 
 public class MainActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
     private int finish = 0;
@@ -22,7 +23,6 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
     private CartFragment cartFragment = new CartFragment();
     private OrderFragment orderFragment = new OrderFragment();
     private ProfileFragment profileFragment = new ProfileFragment();
-    private CartModel cartModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,12 +33,19 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         Intent intent = getIntent();
         CartModel cart = (CartModel) intent.getSerializableExtra("cart");
         if (cart != null) {
-            cartModel = cart;
-            cartModel.setCustomer("Simthembile Shezi");
-            cartFragment.setModel(() -> cartModel);
-            homeFragment.setModel(() -> cartModel);
+            cartFragment.setModel(() -> cart);
+            homeFragment.setModel(() -> cart);
+            orderFragment.setModel(cart::getUser);
+            profileFragment.setModel(cart::getUser);
+
             bottomNavigationView.setSelectedItemId(R.id.cart_dest);
         }else {
+            UserModel user = (UserModel) intent.getSerializableExtra("user");
+            CartModel model = new CartModel(user);
+            cartFragment.setModel(() -> model);
+            homeFragment.setModel(() -> model);
+            orderFragment.setModel(() -> user);
+            profileFragment.setModel(() -> user);
             bottomNavigationView.setSelectedItemId(R.id.home_dest);
         }
     }

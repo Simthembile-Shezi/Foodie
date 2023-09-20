@@ -64,30 +64,27 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
         shops = new ArrayList<>();
         api = FirebaseAPI.getInstance();
         api.getShops((DocumentSnapshot -> {
-            if(DocumentSnapshot != null){
-                for (QueryDocumentSnapshot document : DocumentSnapshot){
+            if (DocumentSnapshot != null) {
+                for (QueryDocumentSnapshot document : DocumentSnapshot) {
                     ShopModel shop = document.toObject(ShopModel.class);
                     shop.setId(document.getId());
                     api.getShopImage(shop.getId(), bytes -> {
-                        if(bytes != null){
+                        if (bytes != null) {
                             shop.setImage(bytes);
                         }
                         shops.add(shop);
-                        if(DocumentSnapshot.size() == shops.size()){
+                        if (DocumentSnapshot.size() == shops.size()) {
                             adapter = new ShopAdapter(shops, view -> {
                                 Intent intent = new Intent(getContext(), ShopProductActivity.class);
                                 ShopModel shopModel = adapter.shop;
-                                if (model != null) {
-                                    CartModel cart = (CartModel) model.getModel();
-                                    if (Objects.equals(cart.getShop(), shopModel.getName())) {
-                                        intent.putExtra("cart", cart);
-                                    } else {
-                                        intent.putExtra("cart", new CartModel(shopModel));
-                                        Toast.makeText(getContext(), String.format("Incomplete order from %s will be removed", cart.getShop()), Toast.LENGTH_LONG).show();
-                                    }
-                                } else {
-                                    intent.putExtra("cart", new CartModel(shopModel));
+                                CartModel cart = (CartModel) model.getModel();
+                                if(cart.getShop() == null){
+                                    cart.setShop(shopModel);
+                                }else if (!Objects.equals(cart.getShop().getName(), shopModel.getName())) {
+                                    cart.setShop(shopModel);
+                                    Toast.makeText(getContext(), String.format("Incomplete order from %s will be removed", cart.getShop()), Toast.LENGTH_LONG).show();
                                 }
+                                intent.putExtra("cart", cart);
                                 startActivity(intent);
                             });
                             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());

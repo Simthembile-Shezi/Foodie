@@ -64,7 +64,7 @@ public class ShopProductActivity extends AppCompatActivity {
                     btnCart.setVisibility(View.VISIBLE);
                 }
                 cart.add(model);
-                btnCart.setText(String.format("R %s", cart.getPrice()));
+                btnCart.setText(String.format("R %s", cart.calculatePrice()));
             }
         }
     }

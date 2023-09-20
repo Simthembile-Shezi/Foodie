@@ -19,6 +19,9 @@ import android.widget.LinearLayout;
 
 import java.util.Objects;
 
+import za.simshezi.shop.model.SerializableModel;
+import za.simshezi.shop.model.UserModel;
+
 
 public class ProfileFragment extends Fragment {
     private LinearLayout layoutCards;
@@ -30,6 +33,8 @@ public class ProfileFragment extends Fragment {
     private LinearLayout layoutSettings;
     private ImageView imgProfile;
     private Button btnSignOut;
+    private SerializableModel model;
+
     public ProfileFragment() {
         // Required empty public constructor
     }
@@ -63,21 +68,30 @@ public class ProfileFragment extends Fragment {
         layoutPrivacy.setOnClickListener(onLayoutClicked(PrivacyActivity.class));
         layoutSettings.setOnClickListener(onLayoutClicked(SettingsActivity.class));
         imgProfile.setOnClickListener(onLayoutClicked(ProfileDetailsActivity.class));
-        btnSignOut.setOnClickListener((view) ->{
-            Activity activity = getActivity();
-            if(activity != null) {
-                SharedPreferences sharedpreferences = activity.getSharedPreferences("login", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.clear();
-                editor.apply();
-                activity.finishAffinity();
-            }
+        btnSignOut.setOnClickListener((view) -> {
+            Activity activity = requireActivity();
+            SharedPreferences sharedpreferences = activity.getSharedPreferences("login", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.clear();
+            editor.apply();
+            activity.finishAffinity();
         });
     }
-    private View.OnClickListener onLayoutClicked(Class<?> clazz){
+
+    private View.OnClickListener onLayoutClicked(Class<?> clazz) {
+        UserModel user = new UserModel();
+        if (model != null) {
+            user = (UserModel) model.getModel();
+        }
+        UserModel finalUser = user;
         return (view -> {
             Intent intent = new Intent(getContext(), clazz);
+            intent.putExtra("user", finalUser);
             startActivity(intent);
         });
+    }
+
+    public void setModel(SerializableModel model) {
+        this.model = model;
     }
 }
