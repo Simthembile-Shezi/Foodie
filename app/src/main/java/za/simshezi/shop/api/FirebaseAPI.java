@@ -19,6 +19,7 @@ import za.simshezi.shop.model.CartModel;
 import za.simshezi.shop.model.IngredientModel;
 import za.simshezi.shop.model.ProductModel;
 import za.simshezi.shop.model.ShopModel;
+import za.simshezi.shop.model.UserModel;
 
 public class FirebaseAPI {
     private FirebaseFirestore db;
@@ -44,13 +45,50 @@ public class FirebaseAPI {
         }
         return firebase;
     }
+    public void addUser(UserModel model, OnSuccessListener<Boolean> callback) {
+        Map<String, Object> user = new HashMap<>();
+        user.put("email", model.getEmail());
+        user.put("name", model.getName());
+        user.put("cellphone", model.getCellphone());
 
+        customersCollection.add(user)
+                .addOnSuccessListener(runnable -> callback.onSuccess(true))
+                .addOnFailureListener(e -> callback.onSuccess(false));
+    }
+    public void editUser(UserModel model, OnSuccessListener<Boolean> callback) {
+        Map<String, Object> user = new HashMap<>();
+        user.put("email", model.getEmail());
+        user.put("name", model.getName());
+        user.put("cellphone", model.getCellphone());
+
+        customersCollection.document(model.getId()).set(user)
+                .addOnSuccessListener(runnable -> callback.onSuccess(true))
+                .addOnFailureListener(e -> callback.onSuccess(false));
+    }
     public void getCustomer(String email, OnSuccessListener<QuerySnapshot> callback) {
         Query query = customersCollection.whereEqualTo("email", email);
         executeQuery(query, callback);
     }
-    public void getOrders(String cellphone, OnSuccessListener<QuerySnapshot> callback) {
-        Query query = ordersCollection.whereEqualTo("cellphone", cellphone);
+    public void setOrder(CartModel cart, OnSuccessListener<Boolean> callback) {
+        Map<String, Object> order = new HashMap<>();
+        order.put("customer", cart.getUser().getName());
+        order.put("email", cart.getUser().getEmail());
+        order.put("cellphone", cart.getUser().getCellphone());
+        order.put("items", cart.getList().size());
+        order.put("payment", cart.getPayment());
+        order.put("shopId", cart.getShop().getId());
+        order.put("time", Timestamp.now());
+        order.put("price", cart.getPrice());
+
+        ordersCollection.add(order)
+                .addOnSuccessListener(documentReference -> {
+                    callback.onSuccess(true);
+                }).addOnFailureListener(e -> {
+                    callback.onSuccess(false);
+                });
+    }
+    public void getOrders(String email, OnSuccessListener<QuerySnapshot> callback) {
+        Query query = ordersCollection.whereEqualTo("email", email);
         executeQuery(query, callback);
     }
 
@@ -90,23 +128,5 @@ public class FirebaseAPI {
         imageRef.getBytes(MAX_DOWNLOAD_SIZE)
                 .addOnSuccessListener(bytes -> callback.onSuccess(bytes))
                 .addOnFailureListener(exception -> callback.onSuccess(null));
-    }
-
-    public void setOrder(CartModel cart, OnSuccessListener<Boolean> callback) {
-        Map<String, Object> order = new HashMap<>();
-        order.put("customer", cart.getUser().getName());
-        order.put("cellphone", cart.getUser().getCellphone());
-        order.put("items", cart.getList().size());
-        order.put("payment", cart.getPayment());
-        order.put("shopId", cart.getShop().getId());
-        order.put("time", Timestamp.now());
-        order.put("price", cart.getPrice());
-
-        ordersCollection.add(order)
-                .addOnSuccessListener(documentReference -> {
-                   callback.onSuccess(true);
-                }).addOnFailureListener(e -> {
-                    callback.onSuccess(false);
-                });
     }
 }

@@ -63,6 +63,7 @@ public class CheckoutActivity extends AppCompatActivity {
                     cart.setList(new ArrayList<>());
                     Intent data = new Intent(CheckoutActivity.this, MainActivity.class);
                     data.putExtra("cart", cart);
+                    startActivity(data);
                 }else
                     Toast.makeText(this, "Try again", Toast.LENGTH_SHORT).show();
             });

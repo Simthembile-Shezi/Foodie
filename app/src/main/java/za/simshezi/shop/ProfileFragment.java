@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 
 import java.util.Objects;
 
+import za.simshezi.shop.model.CartModel;
 import za.simshezi.shop.model.SerializableModel;
 import za.simshezi.shop.model.UserModel;
 
@@ -78,15 +79,16 @@ public class ProfileFragment extends Fragment {
         });
     }
 
+    @NonNull
     private View.OnClickListener onLayoutClicked(Class<?> clazz) {
-        UserModel user = new UserModel();
+        CartModel cart = null;
         if (model != null) {
-            user = (UserModel) model.getModel();
+            cart = (CartModel) model.getModel();
         }
-        UserModel finalUser = user;
+        CartModel finalCart = cart;
         return (view -> {
             Intent intent = new Intent(getContext(), clazz);
-            intent.putExtra("user", finalUser);
+            intent.putExtra("cart", finalCart);
             startActivity(intent);
         });
     }

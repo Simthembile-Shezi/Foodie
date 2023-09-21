@@ -3,6 +3,7 @@ package za.simshezi.shop.model;
 import java.io.Serializable;
 
 public class UserModel implements Serializable {
+    private String id;
     private String name;
     private String email;
     private String cellphone;
@@ -14,6 +15,14 @@ public class UserModel implements Serializable {
         this.name = name;
         this.email = email;
         this.cellphone = cellphone;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {

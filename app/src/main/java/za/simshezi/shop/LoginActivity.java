@@ -71,14 +71,20 @@ public class LoginActivity extends AppCompatActivity {
                         editor.putString("password", password);
                         editor.apply();
                         FirebaseAPI.getInstance().getCustomer(email, DocumentSnapshot -> {
-                            UserModel user = new UserModel();
-                            for (QueryDocumentSnapshot document : DocumentSnapshot) {
-                                user = document.toObject(UserModel.class);
-                                break;
+                            if(DocumentSnapshot != null){
+                                UserModel user = new UserModel();
+                                for (QueryDocumentSnapshot document : DocumentSnapshot) {
+                                    user = document.toObject(UserModel.class);
+                                    user.setId(document.getId());
+                                    break;
+                                }
+                                Intent intent = new Intent(this, MainActivity.class);
+                                intent.putExtra("user", user);
+                                startActivity(intent);
+                                finish();
+                            }else {
+                                Toast.makeText(LoginActivity.this, "No account found, contact admin", Toast.LENGTH_SHORT).show();
                             }
-                            Intent intent = new Intent(this, MainActivity.class);
-                            intent.putExtra("user", user);
-                            startActivity(intent);
                         });
                     } else {
                         // Login failed

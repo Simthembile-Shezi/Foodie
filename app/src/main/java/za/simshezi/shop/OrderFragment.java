@@ -22,6 +22,7 @@ import java.util.List;
 import za.simshezi.shop.adapter.OrderAdapter;
 import za.simshezi.shop.api.FirebaseAPI;
 import za.simshezi.shop.mock.OrdersData;
+import za.simshezi.shop.model.CartModel;
 import za.simshezi.shop.model.OrderModel;
 import za.simshezi.shop.model.SerializableModel;
 import za.simshezi.shop.model.UserModel;
@@ -58,9 +59,9 @@ public class OrderFragment extends Fragment {
 
     private void build() {
         if (model != null) {
-            UserModel user = (UserModel) model.getModel();
+            CartModel cart = (CartModel) model.getModel();
             orders = new ArrayList<>();
-            FirebaseAPI.getInstance().getOrders(user.getCellphone(), documentSnapshots -> {
+            FirebaseAPI.getInstance().getOrders(cart.getUser().getEmail(), documentSnapshots -> {
                 if(documentSnapshots != null && !documentSnapshots.isEmpty()){
                     for (QueryDocumentSnapshot document : documentSnapshots){
                         orders.add(document.toObject(OrderModel.class));

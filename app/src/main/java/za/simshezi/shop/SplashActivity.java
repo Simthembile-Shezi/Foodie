@@ -32,14 +32,20 @@ public class SplashActivity extends AppCompatActivity {
                     .addOnCompleteListener(SplashActivity.this, task -> {
                         if (task.isSuccessful()) {
                             FirebaseAPI.getInstance().getCustomer(email, DocumentSnapshot -> {
-                                UserModel user = new UserModel();
-                                for (QueryDocumentSnapshot document : DocumentSnapshot) {
-                                    user = document.toObject(UserModel.class);
-                                    break;
+                                if(DocumentSnapshot != null){
+                                    UserModel user = new UserModel();
+                                    for (QueryDocumentSnapshot document : DocumentSnapshot) {
+                                        user = document.toObject(UserModel.class);
+                                        user.setId(document.getId());
+                                        break;
+                                    }
+                                    Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                                    intent.putExtra("user", user);
+                                    startActivity(intent);
+                                    finish();
+                                }else{
+                                    startActivity(new Intent(this, LoginActivity.class));
                                 }
-                                Intent intent = new Intent(this, MainActivity.class);
-                                intent.putExtra("user", user);
-                                startActivity(intent);
                             });
                         }
                     });

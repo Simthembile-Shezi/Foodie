@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import za.simshezi.shop.api.FirebaseAPI;
 import za.simshezi.shop.model.UserModel;
 
 public class SignupActivity extends AppCompatActivity {
@@ -57,9 +58,13 @@ public class SignupActivity extends AppCompatActivity {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(SignupActivity.this, task -> {
                     if (task.isSuccessful()) {
-                        // Registration successful
-                        FirebaseUser currentUser = mAuth.getCurrentUser();
-                        finish();
+                        FirebaseAPI.getInstance().addUser(userModel, aBoolean -> {
+                            if(aBoolean){
+                                finish();
+                            }else {
+                                Toast.makeText(SignupActivity.this, "User profile not created", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     } else {
                         // Registration failed
                         Toast.makeText(SignupActivity.this, "Registration failed.", Toast.LENGTH_SHORT).show();

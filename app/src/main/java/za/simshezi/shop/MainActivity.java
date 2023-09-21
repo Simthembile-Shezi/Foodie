@@ -35,17 +35,16 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         if (cart != null) {
             cartFragment.setModel(() -> cart);
             homeFragment.setModel(() -> cart);
-            orderFragment.setModel(cart::getUser);
-            profileFragment.setModel(cart::getUser);
-
+            orderFragment.setModel(() -> cart);
+            profileFragment.setModel(() -> cart);
             bottomNavigationView.setSelectedItemId(R.id.cart_dest);
         }else {
             UserModel user = (UserModel) intent.getSerializableExtra("user");
             CartModel model = new CartModel(user);
             cartFragment.setModel(() -> model);
             homeFragment.setModel(() -> model);
-            orderFragment.setModel(() -> user);
-            profileFragment.setModel(() -> user);
+            orderFragment.setModel(() -> model);
+            profileFragment.setModel(() -> model);
             bottomNavigationView.setSelectedItemId(R.id.home_dest);
         }
     }
