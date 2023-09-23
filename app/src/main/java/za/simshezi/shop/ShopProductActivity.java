@@ -23,6 +23,7 @@ import java.util.List;
 import za.simshezi.shop.adapter.ProductAdapter;
 import za.simshezi.shop.api.FirebaseAPI;
 import za.simshezi.shop.api.ImagesAPI;
+import za.simshezi.shop.api.JavaAPI;
 import za.simshezi.shop.mock.ProductsData;
 import za.simshezi.shop.mock.ShopData;
 import za.simshezi.shop.model.ProductModel;
@@ -33,13 +34,11 @@ import za.simshezi.shop.style.ProductItemDecoration;
 public class ShopProductActivity extends AppCompatActivity {
     public static final int REQ_CODE = 1999;
     private RecyclerView lstProducts;
-    private List<ProductModel> products;
     private ProductAdapter adapter;
     private TextView tvName;
     private ImageView imgShop;
     private Button btnCart;
     private CartModel cart;
-    private FirebaseAPI api;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +48,6 @@ public class ShopProductActivity extends AppCompatActivity {
         btnCart = findViewById(R.id.btnShopCart);
         tvName = findViewById(R.id.tvProductShopName);
         imgShop = findViewById(R.id.imgProductShopImage);
-        products = new ArrayList<>();
-        //api = FirebaseAPI.getInstance();
         build();
     }
 
@@ -64,7 +61,7 @@ public class ShopProductActivity extends AppCompatActivity {
                     btnCart.setVisibility(View.VISIBLE);
                 }
                 cart.add(model);
-                btnCart.setText(String.format("R %s", cart.calculatePrice()));
+                btnCart.setText(String.format("R %s", JavaAPI.formatDouble(cart.calculatePrice())));
             }
         }
     }
@@ -72,29 +69,78 @@ public class ShopProductActivity extends AppCompatActivity {
     private void build() {
         Intent data = getIntent();
         cart = (CartModel) data.getSerializableExtra("cart");
-        //products = api.getProducts(shop.getShopId());
-        products = new ProductsData().getData();
-        adapter = new ProductAdapter(products, view -> {
-            Intent intent = new Intent(this, AddProductCartActivity.class);
+        if (cart != null) {
+            imgShop.setImageBitmap(ImagesAPI.convertToBitmap(cart.getShop().getImage()));
+            tvName.setText(cart.getShop().getName());
+            if (cart.getShop().getProducts().isEmpty()) {
+                ArrayList<ProductModel> list = new ArrayList<>();
+                FirebaseAPI api = FirebaseAPI.getInstance();
+                String id = cart.getShop().getId();
+                api.getProducts(id, querySnapshot -> {
+                    if (querySnapshot != null) {
+                        for (DocumentSnapshot document : querySnapshot) {
+                            ProductModel product = document.toObject(ProductModel.class);
+                            if (product != null) {
+                                /*api.getProductImage(document.getId(), bytes -> {
+                                    if (bytes != null) {
+                                        product.setId(document.getId());
+                                        product.setImage(bytes);
+                                        list.add(product);
+                                        if (list.size() == querySnapshot.size()) {
+                                            cart.getShop().setProducts(list);
+                                            update(list);
+                                        }
+                                    }
+                                });*/
+                                product.setShopId(id);
+                                product.setId(document.getId());
+                                list.add(product);
+                                if (list.size() == querySnapshot.size()) {
+                                    cart.getShop().setProducts(list);
+                                    update(list);
+                                }
+                            }
+                        }
+                    }
+                });
+
+            } else {
+                update(cart.getShop().getProducts());
+            }
+        }
+    }
+
+    private void update(ArrayList<ProductModel> list) {
+        adapter = new ProductAdapter(list, view -> {
+            Intent intent = new Intent(ShopProductActivity.this, AddProductCartActivity.class);
             intent.putExtra("product", adapter.product);
             startActivityForResult(intent, REQ_CODE);
         });
-        //RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(2, LinearLayout.VERTICAL);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         ProductItemDecoration decoration = new ProductItemDecoration();
         lstProducts.setAdapter(adapter);
         lstProducts.setLayoutManager(layoutManager);
         lstProducts.addItemDecoration(decoration);
-        //imgShop.setImageBitmap(ImagesAPI.convertToBitmap(shop.getImage()));
-        imgShop.setImageResource(R.drawable.baseline_fastfood_24);
-        tvName.setText(cart.getShop().getName());
-        btnCart.setVisibility(View.GONE);
+        double price = cart.calculatePrice();
+        if (price > 0) {
+            btnCart.setText(String.format("R %s", JavaAPI.formatDouble(price)));
+        } else {
+            btnCart.setVisibility(View.GONE);
+        }
     }
 
     public void onCartClicked(View view) {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(ShopProductActivity.this, MainActivity.class);
+        cart.setDEST(CartFragment.CART_DEST);
         intent.putExtra("cart", cart);
         startActivity(intent);
-        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(ShopProductActivity.this, MainActivity.class);
+        cart.setDEST(HomeFragment.HOME_DEST);
+        intent.putExtra("cart", cart);
+        startActivity(intent);
     }
 }

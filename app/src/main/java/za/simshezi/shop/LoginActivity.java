@@ -18,9 +18,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import za.simshezi.shop.api.FirebaseAPI;
+import za.simshezi.shop.model.CartModel;
 import za.simshezi.shop.model.UserModel;
 
 public class LoginActivity extends AppCompatActivity {
@@ -70,24 +72,26 @@ public class LoginActivity extends AppCompatActivity {
                         editor.putString("email", email);
                         editor.putString("password", password);
                         editor.apply();
-                        FirebaseAPI.getInstance().getCustomer(email, DocumentSnapshot -> {
-                            if(DocumentSnapshot != null){
-                                UserModel user = new UserModel();
-                                for (QueryDocumentSnapshot document : DocumentSnapshot) {
-                                    user = document.toObject(UserModel.class);
+                        FirebaseAPI.getInstance().getCustomer(email, querySnapshot -> {
+                            if (querySnapshot != null) {
+                                com.google.firebase.firestore.DocumentSnapshot document = querySnapshot.getDocuments().get(0);
+                                UserModel user = document.toObject(UserModel.class);
+                                if (user != null) {
                                     user.setId(document.getId());
-                                    break;
+                                    CartModel model = new CartModel(user);
+                                    model.setDEST(HomeFragment.HOME_DEST);
+                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                    intent.putExtra("cart", model);
+                                    startActivity(intent);
+                                    finish();
+                                } else {
+                                    Toast.makeText(LoginActivity.this, "No account found, contact admin", Toast.LENGTH_SHORT).show();
                                 }
-                                Intent intent = new Intent(this, MainActivity.class);
-                                intent.putExtra("user", user);
-                                startActivity(intent);
-                                finish();
                             }else {
                                 Toast.makeText(LoginActivity.this, "No account found, contact admin", Toast.LENGTH_SHORT).show();
                             }
                         });
                     } else {
-                        // Login failed
                         Toast.makeText(LoginActivity.this, "Login failed.", Toast.LENGTH_SHORT).show();
                     }
                 });

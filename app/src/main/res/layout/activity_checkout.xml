@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/theme"
     tools:context=".CheckoutActivity">
 
     <TextView
@@ -100,6 +101,12 @@
             android:text="Card" />
 
         <RadioButton
+            android:id="@+id/btnEFT"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="EFT" />
+
+        <RadioButton
             android:id="@+id/btnWallet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -108,8 +115,10 @@
 
     <Button
         android:id="@+id/btnCheckoutOrder"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
         android:onClick="onCheckoutClicked"
         android:text="Confirm Order"

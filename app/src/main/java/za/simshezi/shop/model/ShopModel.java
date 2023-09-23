@@ -1,6 +1,7 @@
 package za.simshezi.shop.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class ShopModel implements Serializable {
     private String id;
@@ -11,6 +12,7 @@ public class ShopModel implements Serializable {
     private String status;
     private String address;
     private byte[] image;
+    private ArrayList<ProductModel> products = new ArrayList<>();
 
     public ShopModel() {
     }
@@ -94,5 +96,13 @@ public class ShopModel implements Serializable {
 
     public void setImage(byte[] image) {
         this.image = image;
+    }
+
+    public ArrayList<ProductModel> getProducts() {
+        return products;
+    }
+
+    public void setProducts(ArrayList<ProductModel> products) {
+        this.products = products;
     }
 }

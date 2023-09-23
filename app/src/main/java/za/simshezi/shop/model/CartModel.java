@@ -7,11 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CartModel implements Serializable {
+    private int DEST;
     private ShopModel shop;
     private UserModel user;
     private String payment;
     private Double price;
     private List<ProductModel> list;
+    private List<ShopModel> shops = new ArrayList<>();
 
     public CartModel(ShopModel shop) {
         this.shop = shop;
@@ -74,5 +76,21 @@ public class CartModel implements Serializable {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public int getDEST() {
+        return DEST;
+    }
+
+    public void setDEST(int DEST) {
+        this.DEST = DEST;
+    }
+
+    public List<ShopModel> getShops() {
+        return shops;
+    }
+
+    public void setShops(List<ShopModel> shops) {
+        this.shops = shops;
     }
 }

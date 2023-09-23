@@ -2,7 +2,6 @@ package za.simshezi.shop;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -12,9 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
-import za.simshezi.shop.model.SerializableModel;
 import za.simshezi.shop.model.CartModel;
-import za.simshezi.shop.model.UserModel;
 
 public class MainActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
     private int finish = 0;
@@ -32,20 +29,23 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         bottomNavigationView.setOnItemSelectedListener(this);
         Intent intent = getIntent();
         CartModel cart = (CartModel) intent.getSerializableExtra("cart");
-        if (cart != null) {
-            cartFragment.setModel(() -> cart);
-            homeFragment.setModel(() -> cart);
-            orderFragment.setModel(() -> cart);
-            profileFragment.setModel(() -> cart);
-            bottomNavigationView.setSelectedItemId(R.id.cart_dest);
-        }else {
-            UserModel user = (UserModel) intent.getSerializableExtra("user");
-            CartModel model = new CartModel(user);
-            cartFragment.setModel(() -> model);
-            homeFragment.setModel(() -> model);
-            orderFragment.setModel(() -> model);
-            profileFragment.setModel(() -> model);
-            bottomNavigationView.setSelectedItemId(R.id.home_dest);
+        switch (cart.getDEST()){
+            case 0: {
+                bottomNavigationView.setSelectedItemId(R.id.home_dest);
+                break;
+            }
+            case 1: {
+                bottomNavigationView.setSelectedItemId(R.id.cart_dest);
+                break;
+            }
+            case 2: {
+                bottomNavigationView.setSelectedItemId(R.id.order_dest);
+                break;
+            }
+            case 3: {
+                bottomNavigationView.setSelectedItemId(R.id.profile_dest);
+                break;
+            }
         }
     }
 

@@ -18,6 +18,9 @@ public class IngredientModel implements Serializable {
         this.price = price;
     }
 
+    public IngredientModel() {
+    }
+
     public String getIngredientId() {
         return ingredientId;
     }

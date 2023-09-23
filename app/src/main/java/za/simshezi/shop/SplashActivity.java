@@ -10,13 +10,16 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import za.simshezi.shop.api.FirebaseAPI;
+import za.simshezi.shop.model.CartModel;
 import za.simshezi.shop.model.UserModel;
 
 public class SplashActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,29 +30,32 @@ public class SplashActivity extends AppCompatActivity {
         SharedPreferences readPreferences = getSharedPreferences("login", Context.MODE_PRIVATE);
         String email = readPreferences.getString("email", "");
         String password = readPreferences.getString("password", "");
-        if(!email.equals("") && !password.equals("")) {
+        if (!email.equals("") && !password.equals("")) {
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(SplashActivity.this, task -> {
                         if (task.isSuccessful()) {
-                            FirebaseAPI.getInstance().getCustomer(email, DocumentSnapshot -> {
-                                if(DocumentSnapshot != null){
-                                    UserModel user = new UserModel();
-                                    for (QueryDocumentSnapshot document : DocumentSnapshot) {
-                                        user = document.toObject(UserModel.class);
+                            FirebaseAPI.getInstance().getCustomer(email, querySnapshot -> {
+                                if (querySnapshot != null) {
+                                    DocumentSnapshot document = querySnapshot.getDocuments().get(0);
+                                    UserModel user = document.toObject(UserModel.class);
+                                    if (user != null) {
                                         user.setId(document.getId());
-                                        break;
+                                        CartModel model = new CartModel(user);
+                                        model.setDEST(HomeFragment.HOME_DEST);
+                                        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                                        intent.putExtra("cart", model);
+                                        startActivity(intent);
+                                        finish();
+                                    }else {
+                                        startActivity(new Intent(this, LoginActivity.class));
                                     }
-                                    Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                                    intent.putExtra("user", user);
-                                    startActivity(intent);
-                                    finish();
-                                }else{
+                                } else {
                                     startActivity(new Intent(this, LoginActivity.class));
                                 }
                             });
                         }
                     });
-        }else {
+        } else {
             startActivity(new Intent(this, LoginActivity.class));
         }
     }

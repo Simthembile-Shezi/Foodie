@@ -10,7 +10,7 @@ public class ProductsData {
     public List<ProductModel> getData() {
         List<ProductModel> list = new ArrayList<>();
         for(int i = 0; i < 20; i++){
-            list.add(new ProductModel("productId","shopId", "Product "+i, "Short description",14.9f * i, new byte[0]));
+            //list.add(new ProductModel("productId","shopId", "Product "+i, "Short description",14.9f * i, new byte[0]));
         }
         return list;
     }

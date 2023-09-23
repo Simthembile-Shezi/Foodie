@@ -19,7 +19,7 @@ import za.simshezi.shop.model.CartModel;
 public class CheckoutActivity extends AppCompatActivity {
 
     private TextView tvCustomer, tvShop, tvPrice;
-    private RadioButton btnCash, btnCard, btnWallet;
+    private RadioButton btnCash, btnCard, btnEFT, btnWallet;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +30,7 @@ public class CheckoutActivity extends AppCompatActivity {
         tvPrice = findViewById(R.id.tvChechoutPrice);
         btnCash = findViewById(R.id.btnCash);
         btnCard = findViewById(R.id.btnCard);
+        btnEFT = findViewById(R.id.btnEFT);
         btnWallet = findViewById(R.id.btnWallet);
 
         Intent intent = getIntent();
@@ -50,6 +51,8 @@ public class CheckoutActivity extends AppCompatActivity {
                 payment = btnCard.getText().toString();
             }else if(btnCard.isChecked()){
                 payment = btnCard.getText().toString();
+            }else if(btnEFT.isChecked()){
+                payment = btnEFT.getText().toString();
             }else if(btnWallet.isChecked()){
                 payment = btnWallet.getText().toString();
             }else {
@@ -61,6 +64,7 @@ public class CheckoutActivity extends AppCompatActivity {
                 if(bool){
                     Toast.makeText(this, "Order placed", Toast.LENGTH_SHORT).show();
                     cart.setList(new ArrayList<>());
+                    cart.setDEST(OrderFragment.ORDER_DEST);
                     Intent data = new Intent(CheckoutActivity.this, MainActivity.class);
                     data.putExtra("cart", cart);
                     startActivity(data);

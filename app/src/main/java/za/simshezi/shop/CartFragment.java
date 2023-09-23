@@ -16,35 +16,27 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import za.simshezi.shop.adapter.CartAdapter;
 import za.simshezi.shop.api.FirebaseAPI;
 import za.simshezi.shop.api.ImagesAPI;
-import za.simshezi.shop.model.SerializableModel;
 import za.simshezi.shop.model.CartModel;
 import za.simshezi.shop.model.ProductModel;
 
 public class CartFragment extends Fragment {
+    public static int CART_DEST = 1;
     private RecyclerView lstProducts;
-    private TextView tvName, tvSubtotal, tvFees, tvTotal, tvOrderSummery;
+    private TextView tvName, tvSubtotal, tvFees, tvTotal;
     private ConstraintLayout constraintEmptyCart, constraintCart;
     private Button btnCheckout;
     private ImageView imgShop;
-    private SerializableModel model;
     private List<ProductModel> list;
     private FirebaseAPI api;
 
-    public void setModel(SerializableModel model) {
-        this.model = model;
-    }
-
     public CartFragment() {
         // Required empty public constructor
-        model = null;
     }
 
     @Override
@@ -57,7 +49,6 @@ public class CartFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         lstProducts = view.findViewById(R.id.lstCart);
         tvName = view.findViewById(R.id.tvCartShopName);
-        tvOrderSummery = view.findViewById(R.id.tvOrderSummery);
         tvSubtotal = view.findViewById(R.id.tvCartSubTotalAmount);
         tvFees = view.findViewById(R.id.tvCartFeesAmount);
         tvTotal = view.findViewById(R.id.tvCartTotalAmount);
@@ -69,16 +60,16 @@ public class CartFragment extends Fragment {
     }
 
     private void build() {
-        if (model != null) {
+        CartModel cart = (CartModel) requireActivity().getIntent().getSerializableExtra("cart");
+        if (cart != null) {
             api = FirebaseAPI.getInstance();
-            CartModel cart = (CartModel) model.getModel();
-            if(cart.getList().isEmpty()){
+            if (cart.getList().isEmpty()) {
                 constraintCart.setVisibility(View.GONE);
                 constraintEmptyCart.setVisibility(View.VISIBLE);
                 return;
             }
             double subtotal = cart.calculatePrice();
-            double fees = subtotal  * 0.05;
+            double fees = subtotal * 0.05;
             double total = subtotal + fees;
             list = cart.getList();
             tvName.setText(cart.getShop().getName());

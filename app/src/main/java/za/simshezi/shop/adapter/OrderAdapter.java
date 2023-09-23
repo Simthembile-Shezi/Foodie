@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import za.simshezi.shop.R;
-import za.simshezi.shop.api.TimestampAPI;
+import za.simshezi.shop.api.JavaAPI;
 import za.simshezi.shop.model.OrderModel;
 
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHolder> {
@@ -64,8 +64,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
             tvName.setText(String.format("%s", model.getCustomer()));
             tvStatus.setText(String.format("%s", model.getStatus()));
             tvItems.setText(String.format("%s Items", model.getItems()));
-            tvDate.setText(String.format("%s", TimestampAPI.getTime(model.getTime())));
-            tvPrice.setText(String.format("R %s", model.getPrice()));
+            tvDate.setText(String.format("%s", JavaAPI.getTime(model.getTime())));
+            tvPrice.setText(String.format("R %s", JavaAPI.formatDouble(model.getPrice())));
         }
     }
 }

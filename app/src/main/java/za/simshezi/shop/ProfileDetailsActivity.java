@@ -51,6 +51,7 @@ public class ProfileDetailsActivity extends AppCompatActivity {
         FirebaseAPI.getInstance().editUser(user, bool -> {
             if (bool) {
                 model.setUser(user);
+                model.setDEST(ProfileFragment.PROFILE_DEST);
                 Intent intent = new Intent(ProfileDetailsActivity.this, MainActivity.class);
                 intent.putExtra("cart", model);
                 startActivity(intent);

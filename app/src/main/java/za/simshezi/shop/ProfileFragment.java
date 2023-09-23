@@ -16,15 +16,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-
-import java.util.Objects;
+import android.widget.TextView;
 
 import za.simshezi.shop.model.CartModel;
-import za.simshezi.shop.model.SerializableModel;
 import za.simshezi.shop.model.UserModel;
 
 
 public class ProfileFragment extends Fragment {
+    public static int PROFILE_DEST = 3;
     private LinearLayout layoutCards;
     private LinearLayout layoutWallet;
     private LinearLayout layoutPromotions;
@@ -34,7 +33,7 @@ public class ProfileFragment extends Fragment {
     private LinearLayout layoutSettings;
     private ImageView imgProfile;
     private Button btnSignOut;
-    private SerializableModel model;
+    private TextView tvName, tvEmail;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -57,43 +56,42 @@ public class ProfileFragment extends Fragment {
         layoutSettings = view.findViewById(R.id.layoutProfileSettings);
         imgProfile = view.findViewById(R.id.imgProfile);
         btnSignOut = view.findViewById(R.id.btnSignOut);
+        tvName = view.findViewById(R.id.tvProfileFullname);
+        tvEmail = view.findViewById(R.id.tvProfileEmail);
         build();
     }
 
     private void build() {
-        layoutCards.setOnClickListener(onLayoutClicked(CardPaymentsActivity.class));
-        layoutWallet.setOnClickListener(onLayoutClicked(CreditWalletActivity.class));
-        layoutPromotions.setOnClickListener(onLayoutClicked(PromotionsActivity.class));
-        layoutHelp.setOnClickListener(onLayoutClicked(HelpActivity.class));
-        layoutAbout.setOnClickListener(onLayoutClicked(AboutActivity.class));
-        layoutPrivacy.setOnClickListener(onLayoutClicked(PrivacyActivity.class));
-        layoutSettings.setOnClickListener(onLayoutClicked(SettingsActivity.class));
-        imgProfile.setOnClickListener(onLayoutClicked(ProfileDetailsActivity.class));
-        btnSignOut.setOnClickListener((view) -> {
-            Activity activity = requireActivity();
-            SharedPreferences sharedpreferences = activity.getSharedPreferences("login", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.clear();
-            editor.apply();
-            activity.finishAffinity();
-        });
+        CartModel cart = (CartModel) requireActivity().getIntent().getSerializableExtra("cart");
+        if(cart != null) {
+            UserModel user = cart.getUser();
+            tvEmail.setText(user.getEmail());
+            tvName.setText(user.getName());
+            layoutCards.setOnClickListener(onLayoutClicked(CardPaymentsActivity.class, cart));
+            layoutWallet.setOnClickListener(onLayoutClicked(CreditWalletActivity.class, cart));
+            layoutPromotions.setOnClickListener(onLayoutClicked(PromotionsActivity.class, cart));
+            layoutHelp.setOnClickListener(onLayoutClicked(HelpActivity.class, cart));
+            layoutAbout.setOnClickListener(onLayoutClicked(AboutActivity.class, cart));
+            layoutPrivacy.setOnClickListener(onLayoutClicked(PrivacyActivity.class, cart));
+            layoutSettings.setOnClickListener(onLayoutClicked(SettingsActivity.class, cart));
+            imgProfile.setOnClickListener(onLayoutClicked(ProfileDetailsActivity.class, cart));
+            btnSignOut.setOnClickListener((view) -> {
+                Activity activity = requireActivity();
+                SharedPreferences sharedpreferences = activity.getSharedPreferences("login", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.clear();
+                editor.apply();
+                activity.finishAffinity();
+            });
+        }
     }
 
     @NonNull
-    private View.OnClickListener onLayoutClicked(Class<?> clazz) {
-        CartModel cart = null;
-        if (model != null) {
-            cart = (CartModel) model.getModel();
-        }
-        CartModel finalCart = cart;
+    private View.OnClickListener onLayoutClicked(Class<?> clazz, CartModel cart) {
         return (view -> {
             Intent intent = new Intent(getContext(), clazz);
-            intent.putExtra("cart", finalCart);
+            intent.putExtra("cart", cart);
             startActivity(intent);
         });
-    }
-
-    public void setModel(SerializableModel model) {
-        this.model = model;
     }
 }

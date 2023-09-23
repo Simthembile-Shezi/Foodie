@@ -16,6 +16,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.List;
 
 import za.simshezi.shop.R;
+import za.simshezi.shop.api.JavaAPI;
 import za.simshezi.shop.model.ProductModel;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder>{
@@ -64,7 +65,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         public void setProduct(ProductModel model) {
             ProductIngredientAdapter adapter = new ProductIngredientAdapter(context ,model.getIngredients());
             tvProductName.setText(model.getName());
-            tvProductPrice.setText(String.format("R %s", model.getPrice()));
+            tvProductPrice.setText(String.format("R %s", JavaAPI.formatDouble(model.getPrice())));
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
             listView.setAdapter(adapter);
             listView.setLayoutManager(layoutManager);

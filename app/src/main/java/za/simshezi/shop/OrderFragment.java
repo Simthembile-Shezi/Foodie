@@ -21,22 +21,17 @@ import java.util.List;
 
 import za.simshezi.shop.adapter.OrderAdapter;
 import za.simshezi.shop.api.FirebaseAPI;
-import za.simshezi.shop.mock.OrdersData;
 import za.simshezi.shop.model.CartModel;
 import za.simshezi.shop.model.OrderModel;
-import za.simshezi.shop.model.SerializableModel;
-import za.simshezi.shop.model.UserModel;
 import za.simshezi.shop.style.ShopItemDecoration;
 
 public class OrderFragment extends Fragment {
+    public static int ORDER_DEST = 2;
     private List<OrderModel> orders;
     private RecyclerView lstOrders;
     private TextView tvNoOrders;
-    private SerializableModel model;
-
 
     public OrderFragment() {
-        orders = new ArrayList<>();
     }
 
     @Override
@@ -58,10 +53,10 @@ public class OrderFragment extends Fragment {
     }
 
     private void build() {
+        CartModel model = (CartModel) requireActivity().getIntent().getSerializableExtra("cart");
         if (model != null) {
-            CartModel cart = (CartModel) model.getModel();
             orders = new ArrayList<>();
-            FirebaseAPI.getInstance().getOrders(cart.getUser().getEmail(), documentSnapshots -> {
+            FirebaseAPI.getInstance().getOrders(model.getUser().getEmail(), documentSnapshots -> {
                 if(documentSnapshots != null && !documentSnapshots.isEmpty()){
                     for (QueryDocumentSnapshot document : documentSnapshots){
                         orders.add(document.toObject(OrderModel.class));
@@ -83,9 +78,5 @@ public class OrderFragment extends Fragment {
                 }
             });
         }
-    }
-
-    public void setModel(SerializableModel model) {
-        this.model = model;
     }
 }

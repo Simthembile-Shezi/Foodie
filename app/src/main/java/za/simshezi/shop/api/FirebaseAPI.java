@@ -45,6 +45,7 @@ public class FirebaseAPI {
         }
         return firebase;
     }
+
     public void addUser(UserModel model, OnSuccessListener<Boolean> callback) {
         Map<String, Object> user = new HashMap<>();
         user.put("email", model.getEmail());
@@ -55,6 +56,7 @@ public class FirebaseAPI {
                 .addOnSuccessListener(runnable -> callback.onSuccess(true))
                 .addOnFailureListener(e -> callback.onSuccess(false));
     }
+
     public void editUser(UserModel model, OnSuccessListener<Boolean> callback) {
         Map<String, Object> user = new HashMap<>();
         user.put("email", model.getEmail());
@@ -65,10 +67,12 @@ public class FirebaseAPI {
                 .addOnSuccessListener(runnable -> callback.onSuccess(true))
                 .addOnFailureListener(e -> callback.onSuccess(false));
     }
+
     public void getCustomer(String email, OnSuccessListener<QuerySnapshot> callback) {
         Query query = customersCollection.whereEqualTo("email", email);
         executeQuery(query, callback);
     }
+
     public void setOrder(CartModel cart, OnSuccessListener<Boolean> callback) {
         Map<String, Object> order = new HashMap<>();
         order.put("customer", cart.getUser().getName());
@@ -79,14 +83,39 @@ public class FirebaseAPI {
         order.put("shopId", cart.getShop().getId());
         order.put("time", Timestamp.now());
         order.put("price", cart.getPrice());
+        order.put("status", "Placed");
 
         ordersCollection.add(order)
                 .addOnSuccessListener(documentReference -> {
+                    for (ProductModel model : cart.getList()) {
+                        Map<String, Object> product = new HashMap<>();
+                        product.put("name", model.getName());
+                        product.put("price", model.getPrice());
+                        documentReference.collection("product").add(product)
+                                .addOnSuccessListener(documentRef -> {
+                                    for (IngredientModel item : model.getIngredients()) {
+                                        Map<String, Object> ingredient = new HashMap<>();
+                                        ingredient.put("name", item.getName());
+                                        ingredient.put("price", item.getPrice());
+                                        ingredient.put("count", item.getCount());
+                                        documentRef.collection("ingredient").add(ingredient);
+                                    }
+                                });
+                    }
                     callback.onSuccess(true);
-                }).addOnFailureListener(e -> {
-                    callback.onSuccess(false);
-                });
+                }).addOnFailureListener(e -> callback.onSuccess(false));
     }
+
+    public void getProducts(String id, OnSuccessListener<QuerySnapshot> callback) {
+        Query query = restaurantsCollection.document(id).collection("product");
+        executeQuery(query, callback);
+    }
+
+    public void getIngredients(String shopId, String productId, OnSuccessListener<QuerySnapshot> callback) {
+        Query query = restaurantsCollection.document(shopId).collection("product").document(productId).collection("ingredient");
+        executeQuery(query, callback);
+    }
+
     public void getOrders(String email, OnSuccessListener<QuerySnapshot> callback) {
         Query query = ordersCollection.whereEqualTo("email", email);
         executeQuery(query, callback);
@@ -129,4 +158,6 @@ public class FirebaseAPI {
                 .addOnSuccessListener(bytes -> callback.onSuccess(bytes))
                 .addOnFailureListener(exception -> callback.onSuccess(null));
     }
+
+
 }
