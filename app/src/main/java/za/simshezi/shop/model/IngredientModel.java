@@ -8,17 +8,39 @@ public class IngredientModel implements Serializable {
     private String ingredientId;    //PK
     private String productId;       //FK
     private String name;
-    private float price;
-    private int count;
+    private Double price;
+    private Integer count;
 
-    public IngredientModel(String ingredientId, String productId, String name, float price) {
-        this.ingredientId = ingredientId;
-        this.productId = productId;
+    public IngredientModel() {
+    }
+
+    public IngredientModel(String name, Double price) {
         this.name = name;
         this.price = price;
     }
 
-    public IngredientModel() {
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
     }
 
     public String getIngredientId() {
@@ -35,29 +57,5 @@ public class IngredientModel implements Serializable {
 
     public void setProductId(String productId) {
         this.productId = productId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public float getPrice() {
-        return price;
-    }
-
-    public void setPrice(float price) {
-        this.price = price;
-    }
-
-    public int getCount() {
-        return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
     }
 }

@@ -15,6 +15,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.List;
 
 import za.simshezi.shop.R;
+import za.simshezi.shop.api.JavaAPI;
 import za.simshezi.shop.model.IngredientModel;
 
 public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.IngredientViewHolder> {
@@ -86,7 +87,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
         public void setIngredient(IngredientModel ingredient) {
             this.ingredient = ingredient;
             tvName.setText(ingredient.getName());
-            tvPrice.setText(String.format("R %s", ingredient.getPrice()));
+            tvPrice.setText(String.format("R %s", JavaAPI.formatDouble(ingredient.getPrice())));
             btnRemove.setOnClickListener(view -> {
                 int count = ingredient.getCount();
                 if(count > 0){
