@@ -49,7 +49,6 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         private OrderModel model;
         private TextView tvName, tvPrice, tvDate, tvStatus, tvItems;
         private ImageView imgShop;
-        private Button btnReorder;
         public OrderViewHolder(@NonNull View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tvOrderShopName);

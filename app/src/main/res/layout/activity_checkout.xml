@@ -53,7 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="76dp"
-        android:text="TextView"
+        android:text="@string/shop_name"
         app:layout_constraintBottom_toBottomOf="@+id/lbCheckoutShopName"
         app:layout_constraintStart_toEndOf="@+id/lbCheckoutShopName"
         app:layout_constraintTop_toTopOf="@+id/lbCheckoutShopName" />
