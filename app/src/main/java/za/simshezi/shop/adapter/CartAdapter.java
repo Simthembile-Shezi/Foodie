@@ -21,13 +21,13 @@ import za.simshezi.shop.model.ProductModel;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder>{
     private List<ProductModel> list;
-    private View.OnClickListener onClickListener;
-    private static Context context;
+    private AdapterClickListener onClickListener;
+    private Context context;
 
-    public CartAdapter(Context context, List<ProductModel> list, View.OnClickListener onClickListener) {
+    public CartAdapter(Context context, List<ProductModel> list, AdapterClickListener onClickListener) {
         this.list = list;
         this.onClickListener = onClickListener;
-        CartAdapter.context = context;
+        this.context = context;
     }
 
     @NonNull
@@ -41,8 +41,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     @Override
     public void onBindViewHolder(@NonNull CartAdapter.CartViewHolder holder, int position) {
         ProductModel model = list.get(position);
-        holder.setProduct(model);
-        holder.itemView.setOnClickListener(onClickListener);
+        holder.setProduct(model, onClickListener, context);
     }
 
     @Override
@@ -62,13 +61,14 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             button = itemView.findViewById(R.id.btnCartProductDelete);
         }
 
-        public void setProduct(ProductModel model) {
+        public void setProduct(ProductModel model, AdapterClickListener listener, Context context) {
             ProductIngredientAdapter adapter = new ProductIngredientAdapter(context ,model.getIngredients());
             tvProductName.setText(model.getName());
             tvProductPrice.setText(String.format("R %s", JavaAPI.formatDouble(model.getPrice())));
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
             listView.setAdapter(adapter);
             listView.setLayoutManager(layoutManager);
+            button.setOnClickListener(view -> listener.onClick(model));
         }
     }
 }

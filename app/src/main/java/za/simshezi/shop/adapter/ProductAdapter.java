@@ -12,6 +12,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.checkerframework.checker.units.qual.A;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import za.simshezi.shop.R;
@@ -20,13 +23,12 @@ import za.simshezi.shop.api.JavaAPI;
 import za.simshezi.shop.model.ProductModel;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
-    public ProductModel product;
     private List<ProductModel> products;
-    private View.OnClickListener listener;
+    private AdapterClickListener listener;
 
 
-    public ProductAdapter(List<ProductModel> products, View.OnClickListener listener) {
-        this.products = products;
+    public ProductAdapter(AdapterClickListener listener) {
+        this.products = new ArrayList<>();
         this.listener = listener;
     }
 
@@ -43,10 +45,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     public void onBindViewHolder(@NonNull ProductAdapter.ProductViewHolder holder, @SuppressLint("RecyclerView") int position) {
         ProductModel product = products.get(position);
         holder.setProduct(product);
-        holder.itemView.setOnClickListener(view -> {
-            this.product = products.get(position);
-            listener.onClick(view);
-        });
+        holder.itemView.setOnClickListener(view -> listener.onClick(products.get(position)));
     }
 
     @Override
@@ -59,25 +58,15 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         notifyItemInserted(products.size() - 1);
     }
 
-    public void remove(int position) {
-        products.remove(position);
-        notifyItemRemoved(position);
+    public void edit(ProductModel product) {
+        int position = products.indexOf(product);
+        if (position > -1) {
+            products.remove(product);
+            products.add(position, product);
+            notifyItemChanged(position);
+        }
     }
 
-    public void move(int fromPosition, int toPosition) {
-        ProductModel product = products.get(fromPosition);
-        products.add(toPosition, product);
-        notifyItemMoved(fromPosition, toPosition);
-    }
-
-    public void edit(int position, ProductModel product) {
-        products.add(position, product);
-        notifyItemChanged(position);
-    }
-
-    public ProductModel get(int position){
-        return products.get(position);
-    }
     public static class ProductViewHolder extends RecyclerView.ViewHolder {
         public ProductModel product;
         public TextView tvName, tvDescription, tvPrice;

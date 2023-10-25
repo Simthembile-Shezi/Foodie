@@ -48,7 +48,7 @@ public class CheckoutActivity extends AppCompatActivity {
         if(cart != null){
             String payment;
             if(btnCash.isChecked()){
-                payment = btnCard.getText().toString();
+                payment = btnCash.getText().toString();
             }else if(btnCard.isChecked()){
                 payment = btnCard.getText().toString();
             }else if(btnEFT.isChecked()){

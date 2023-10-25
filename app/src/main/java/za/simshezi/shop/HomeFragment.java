@@ -29,7 +29,7 @@ import za.simshezi.shop.style.ShopItemDecoration;
 
 public class HomeFragment extends Fragment implements SearchView.OnQueryTextListener {
     public static int HOME_DEST = 0;
-    private FloatingActionButton btnFilter;
+    private FloatingActionButton btnRefresh;
     private SearchView searchView;
     private RecyclerView lstShops;
     private List<ShopModel> shops;
@@ -50,50 +50,44 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
         super.onViewCreated(view, savedInstanceState);
         lstShops = view.findViewById(R.id.lstShops);
         searchView = view.findViewById(R.id.searchViewHome);
-        btnFilter = view.findViewById(R.id.btnHomeFilter);
+        btnRefresh = view.findViewById(R.id.btnHomeRefresh);
         build();
     }
 
     private void build() {
         CartModel cart = (CartModel) requireActivity().getIntent().getSerializableExtra("cart");
+        api = FirebaseAPI.getInstance();
+        shops = new ArrayList<>();
         if (cart != null) {
-            if (cart.getShops().isEmpty()) {
-                shops = new ArrayList<>();
-                api = FirebaseAPI.getInstance();
-                api.getShops((DocumentSnapshot -> {
-                    if (DocumentSnapshot != null) {
-                        for (QueryDocumentSnapshot document : DocumentSnapshot) {
-                            ShopModel shop = document.toObject(ShopModel.class);
-                            shop.setId(document.getId());
-                            api.getShopImage(shop.getId(), bytes -> {
-                                if (bytes != null) {
-                                    shop.setImage(bytes);
-                                }
-                                shops.add(shop);
-                                if (DocumentSnapshot.size() == shops.size()) {
-                                    cart.setShops(shops);
-                                    update(cart);
-                                }
-                            });
-                        }
+            update(cart);
+            api.getShops((DocumentSnapshot -> {
+                if (DocumentSnapshot != null) {
+                    for (QueryDocumentSnapshot document : DocumentSnapshot) {
+                        ShopModel shop = document.toObject(ShopModel.class);
+                        shop.setId(document.getId());
+                        adapter.add(shop);
+                        new Thread(() -> api.getShopImage(shop.getId(), bytes -> {
+                            shop.setImage(bytes);
+                            shops.add(shop);
+                            adapter.edit(shop);
+                        })).start();
                     }
-                }));
-            } else {
-                shops = cart.getShops();
-                update(cart);
-            }
+                }
+            }));
         }
     }
 
     private void update(CartModel cart) {
-        adapter = new ShopAdapter(shops, view -> {
+        adapter = new ShopAdapter(model -> {
+            ShopModel shopModel = (ShopModel) model;
             Intent intent = new Intent(getContext(), ShopProductActivity.class);
-            ShopModel shopModel = adapter.shop;
             if (cart.getShop() == null) {
                 cart.setShop(shopModel);
             } else if (!Objects.equals(cart.getShop().getName(), shopModel.getName())) {
                 cart.setShop(shopModel);
                 Toast.makeText(getContext(), String.format("Incomplete order from %s has been removed", cart.getShop()), Toast.LENGTH_LONG).show();
+            }else {
+                cart.getShop().setImage(shopModel.getImage());
             }
             intent.putExtra("cart", cart);
             startActivity(intent);
@@ -103,7 +97,7 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
         lstShops.setAdapter(adapter);
         lstShops.setLayoutManager(layoutManager);
         lstShops.addItemDecoration(decoration);
-
+        btnRefresh.setOnClickListener(view -> build());
         searchView.setOnQueryTextListener(HomeFragment.this);
     }
 
@@ -119,7 +113,7 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
         if (filtered.isEmpty()) {
             Toast.makeText(getContext(), "No Shop Found..", Toast.LENGTH_SHORT).show();
         } else {
-            adapter.filterList(filtered);
+            adapter.filter(filtered);
         }
     }
 

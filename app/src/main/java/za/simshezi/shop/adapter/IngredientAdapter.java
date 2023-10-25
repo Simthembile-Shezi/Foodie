@@ -17,14 +17,15 @@ import java.util.List;
 import za.simshezi.shop.R;
 import za.simshezi.shop.api.JavaAPI;
 import za.simshezi.shop.model.IngredientModel;
+import za.simshezi.shop.model.ProductModel;
 
 public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.IngredientViewHolder> {
-    public static List<IngredientModel> ingredients;
-    private static View.OnClickListener onClickListener;
+    private static ProductModel product;
+    private static AdapterClickListener onClickListener;
     private static int position;
 
-    public IngredientAdapter(List<IngredientModel> ingredients, View.OnClickListener onClickListener) {
-        IngredientAdapter.ingredients = ingredients;
+    public IngredientAdapter(ProductModel product, AdapterClickListener onClickListener) {
+        IngredientAdapter.product = product;
         IngredientAdapter.onClickListener = onClickListener;
     }
 
@@ -39,34 +40,33 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
     @Override
     public void onBindViewHolder(@NonNull IngredientAdapter.IngredientViewHolder holder, @SuppressLint("RecyclerView") int position) {
         IngredientAdapter.position = position;
-        IngredientModel ingredient = ingredients.get(position);
+        IngredientModel ingredient = product.getIngredients().get(position);
         holder.setIngredient(ingredient);
-        holder.itemView.setOnClickListener(onClickListener);
     }
 
     @Override
     public int getItemCount() {
-        return ingredients.size();
+        return product.getIngredients().size();
     }
 
     public void add(IngredientModel ingredient) {
-        ingredients.add(ingredient);
-        notifyItemInserted(ingredients.size() - 1);
+        product.getIngredients().add(ingredient);
+        notifyItemInserted(product.getIngredients().size() - 1);
     }
 
     public void remove(int position) {
-        ingredients.remove(position);
+        product.getIngredients().remove(position);
         notifyItemRemoved(position);
     }
 
     public void move(int fromPosition, int toPosition) {
-        IngredientModel ingredient = ingredients.remove(fromPosition);
-        ingredients.add(toPosition, ingredient);
+        IngredientModel ingredient = product.getIngredients().remove(fromPosition);
+        product.getIngredients().add(toPosition, ingredient);
         notifyItemMoved(fromPosition, toPosition);
     }
 
     public void edit(int position, IngredientModel ingredient) {
-        ingredients.add(position, ingredient);
+        product.getIngredients().add(position, ingredient);
         notifyItemChanged(position);
     }
 
@@ -90,22 +90,22 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
             tvPrice.setText(String.format("R %s", JavaAPI.formatDouble(ingredient.getPrice())));
             btnRemove.setOnClickListener(view -> {
                 int count = ingredient.getCount();
-                if(count > 0){
+                if (count > 0) {
                     ingredient.setCount(count - 1);
                     ingredientCount(ingredient);
                 }
             });
             btnAdd.setOnClickListener(view -> {
-                ingredient.setCount(ingredient.getCount() + 1 );
+                ingredient.setCount(ingredient.getCount() + 1);
                 ingredientCount(ingredient);
             });
         }
 
         private void ingredientCount(IngredientModel ingredient) {
             tvCount.setText(String.format("%s", ingredient.getCount()));
-            ingredients.remove(ingredient);
-            ingredients.add(position, ingredient);
-            onClickListener.onClick(itemView);
+            product.getIngredients().remove(ingredient);
+            product.getIngredients().add(position, ingredient);
+            onClickListener.onClick(product);
         }
     }
 }

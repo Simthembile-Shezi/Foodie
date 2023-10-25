@@ -17,11 +17,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import za.simshezi.shop.adapter.CartAdapter;
 import za.simshezi.shop.api.FirebaseAPI;
 import za.simshezi.shop.api.ImagesAPI;
+import za.simshezi.shop.api.JavaAPI;
 import za.simshezi.shop.model.CartModel;
 import za.simshezi.shop.model.ProductModel;
 
@@ -32,8 +34,6 @@ public class CartFragment extends Fragment {
     private ConstraintLayout constraintEmptyCart, constraintCart;
     private Button btnCheckout;
     private ImageView imgShop;
-    private List<ProductModel> list;
-    private FirebaseAPI api;
 
     public CartFragment() {
         // Required empty public constructor
@@ -62,39 +62,42 @@ public class CartFragment extends Fragment {
     private void build() {
         CartModel cart = (CartModel) requireActivity().getIntent().getSerializableExtra("cart");
         if (cart != null) {
-            api = FirebaseAPI.getInstance();
-            if (cart.getList().isEmpty()) {
+            ArrayList<ProductModel> list = cart.getList();
+            if (list.isEmpty()) {
                 constraintCart.setVisibility(View.GONE);
                 constraintEmptyCart.setVisibility(View.VISIBLE);
-                return;
+            }else {
+                CartAdapter adapter = new CartAdapter(getContext(), list, (model) -> {
+                    cart.remove((ProductModel) model);
+                    cart.setDEST(CartFragment.CART_DEST);
+                    Intent intent = new Intent(requireContext(), MainActivity.class);
+                    intent.putExtra("cart", cart);
+                    startActivity(intent);
+                });
+                double subtotal = cart.calculatePrice();
+                double fees = subtotal * 0.05;
+                double total = subtotal + fees;
+                tvSubtotal.setText(String.format("R %s", JavaAPI.formatDouble(subtotal)));
+                tvFees.setText(String.format("R %s", JavaAPI.formatDouble(fees)));
+                tvTotal.setText(String.format("R %s", JavaAPI.formatDouble(total)));
+                tvName.setText(cart.getShop().getName());
+                byte[] image = cart.getShop().getImage();
+                if (image != null) {
+                    imgShop.setImageBitmap(ImagesAPI.convertToBitmap(image));
+                } else
+                    imgShop.setImageResource(R.drawable.baseline_fastfood_24);
+                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+                lstProducts.setAdapter(adapter);
+                lstProducts.setLayoutManager(layoutManager);
+                btnCheckout.setOnClickListener(view -> {
+                    cart.setPrice(total);
+                    Intent intent = new Intent(requireContext(), CheckoutActivity.class);
+                    intent.putExtra("cart", cart);
+                    startActivity(intent);
+                });
+                constraintEmptyCart.setVisibility(View.GONE);
+                constraintCart.setVisibility(View.VISIBLE);
             }
-            double subtotal = cart.calculatePrice();
-            double fees = subtotal * 0.05;
-            double total = subtotal + fees;
-            list = cart.getList();
-            tvName.setText(cart.getShop().getName());
-            tvSubtotal.setText(String.format("R %s", subtotal));
-            tvFees.setText(String.format("R %s", fees));
-            tvTotal.setText(String.format("R %s", total));
-            byte[] image = cart.getShop().getImage();
-            if (image != null) {
-                imgShop.setImageBitmap(ImagesAPI.convertToBitmap(image));
-            } else
-                imgShop.setImageResource(R.drawable.baseline_fastfood_24);
-            CartAdapter adapter = new CartAdapter(getContext(), list, (view) -> {
-
-            });
-            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-            lstProducts.setAdapter(adapter);
-            lstProducts.setLayoutManager(layoutManager);
-            btnCheckout.setOnClickListener(view -> {
-                cart.setPrice(total);
-                Intent intent = new Intent(requireContext(), CheckoutActivity.class);
-                intent.putExtra("cart", cart);
-                startActivity(intent);
-            });
-            constraintEmptyCart.setVisibility(View.GONE);
-            constraintCart.setVisibility(View.VISIBLE);
         } else {
             constraintCart.setVisibility(View.GONE);
             constraintEmptyCart.setVisibility(View.VISIBLE);

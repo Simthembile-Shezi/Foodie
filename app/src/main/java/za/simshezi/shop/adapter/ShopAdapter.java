@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import kotlin.jvm.internal.Lambda;
@@ -19,13 +20,12 @@ import za.simshezi.shop.model.ProductModel;
 import za.simshezi.shop.model.ShopModel;
 
 public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ShopViewHolder> {
-    public ShopModel shop;
     private List<ShopModel> list;
-    private View.OnClickListener onClickListener;
+    private AdapterClickListener listener;
 
-    public ShopAdapter(List<ShopModel> list, View.OnClickListener onClickListener) {
-        this.list = list;
-        this.onClickListener = onClickListener;
+    public ShopAdapter(AdapterClickListener listener) {
+        this.list = new ArrayList<>();
+        this.listener = listener;
     }
 
     @NonNull
@@ -40,10 +40,7 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ShopViewHolder
     public void onBindViewHolder(@NonNull ShopViewHolder holder, int position) {
         ShopModel model = list.get(position);
         holder.setShop(model);
-        holder.itemView.setOnClickListener((view -> {
-            this.shop = list.get(position);
-            onClickListener.onClick(view);
-        }));
+        holder.itemView.setOnClickListener((view -> listener.onClick(list.get(position))));
     }
 
     @Override
@@ -51,35 +48,30 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ShopViewHolder
         return list.size();
     }
 
-    public void filterList(List<ShopModel> filter){
+    public void filter(List<ShopModel> filter) {
         list = filter;
         notifyDataSetChanged();
     }
+
     public void add(ShopModel model) {
         list.add(model);
         notifyItemInserted(list.size() - 1);
     }
 
-    public void remove(int position) {
-        list.remove(position);
-        notifyItemRemoved(position);
+    public void edit(ShopModel shop) {
+        int position = list.indexOf(shop);
+        if (position > -1) {
+            list.remove(shop);
+            list.add(position, shop);
+            notifyItemChanged(position);
+        }
     }
 
-    public void move(int fromPosition, int toPosition) {
-        ShopModel model = list.get(fromPosition);
-        list.add(toPosition, model);
-        notifyItemMoved(fromPosition, toPosition);
-    }
-
-    public void edit(int position, ShopModel model) {
-        list.add(position, model);
-        notifyItemChanged(position);
-    }
-
-    public static class ShopViewHolder extends RecyclerView.ViewHolder{
+    public static class ShopViewHolder extends RecyclerView.ViewHolder {
         private ShopModel model;
         private TextView tvName, tvRating;
         private ImageView imgShop;
+
         public ShopViewHolder(@NonNull View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tvRecyclerShopName);
@@ -90,10 +82,10 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ShopViewHolder
         public void setShop(ShopModel model) {
             this.model = model;
             byte[] data = model.getImage();
-            if(data != null){
+            if (data != null) {
                 Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
                 imgShop.setImageBitmap(bitmap);
-            }else {
+            } else {
                 imgShop.setImageResource(R.drawable.baseline_fastfood_24);
             }
             tvName.setText(model.getName());

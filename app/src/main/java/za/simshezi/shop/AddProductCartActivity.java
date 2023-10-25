@@ -21,7 +21,6 @@ import za.simshezi.shop.adapter.IngredientAdapter;
 import za.simshezi.shop.api.FirebaseAPI;
 import za.simshezi.shop.api.ImagesAPI;
 import za.simshezi.shop.api.JavaAPI;
-import za.simshezi.shop.mock.IngredientsData;
 import za.simshezi.shop.model.IngredientModel;
 import za.simshezi.shop.model.ProductModel;
 import za.simshezi.shop.style.IngredientItemDecoration;
@@ -73,7 +72,7 @@ public class AddProductCartActivity extends AppCompatActivity {
                     for(DocumentSnapshot document: queryDocumentSnapshots){
                         IngredientModel ingredient = document.toObject(IngredientModel.class);
                         if(ingredient != null){
-                            ingredient.setIngredientId(document.getId());
+                            ingredient.setId(document.getId());
                             ingredient.setCount(0);
                             ingredients.add(ingredient);
                         }
@@ -91,9 +90,11 @@ public class AddProductCartActivity extends AppCompatActivity {
     }
 
     private void update() {
-        adapter = new IngredientAdapter(ingredients, view -> {
+        model.setIngredients(ingredients);
+        adapter = new IngredientAdapter(model, viewModel -> {
+            ProductModel product = (ProductModel) viewModel;
             total = model.getPrice();
-            for (IngredientModel model : IngredientAdapter.ingredients) {
+            for (IngredientModel model : product.getIngredients()) {
                 if (model.getCount() > 0)
                     total += (model.getPrice() * model.getCount());
             }
@@ -111,13 +112,14 @@ public class AddProductCartActivity extends AppCompatActivity {
         ProductModel model = (ProductModel) data.getSerializableExtra("product");
         if (model != null) {
             List<IngredientModel> choices = new ArrayList<>();
-            for (IngredientModel ingredient : IngredientAdapter.ingredients) {
+            for (IngredientModel ingredient : model.getIngredients()) {
                 if (ingredient.getCount() > 0) {
                     choices.add(ingredient);
                 }
             }
             model.setIngredients(choices);
             model.setPrice(total);
+            model.setImage(null);
             Intent intent = new Intent();
             intent.putExtra("product", model);
             setResult(Activity.RESULT_OK, intent);

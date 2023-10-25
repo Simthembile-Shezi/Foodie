@@ -18,9 +18,9 @@ import za.simshezi.shop.model.OrderModel;
 
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHolder> {
     private List<OrderModel> list;
-    private View.OnClickListener listener;
+    private AdapterClickListener listener;
 
-    public OrderAdapter(List<OrderModel> list, View.OnClickListener listener) {
+    public OrderAdapter(List<OrderModel> list, AdapterClickListener listener) {
         this.list = list;
         this.listener = listener;
     }
@@ -37,7 +37,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
     public void onBindViewHolder(@NonNull OrderAdapter.OrderViewHolder holder, int position) {
         OrderModel model = list.get(position);
         holder.setupOrder(model);
-        holder.itemView.setOnClickListener(listener);
+        holder.itemView.setOnClickListener((view) ->listener.onClick(list.get(position)));
     }
 
     @Override

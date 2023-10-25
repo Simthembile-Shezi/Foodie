@@ -17,6 +17,7 @@ import java.util.Map;
 
 import za.simshezi.shop.model.CartModel;
 import za.simshezi.shop.model.IngredientModel;
+import za.simshezi.shop.model.OrderModel;
 import za.simshezi.shop.model.ProductModel;
 import za.simshezi.shop.model.ShopModel;
 import za.simshezi.shop.model.UserModel;
@@ -27,6 +28,7 @@ public class FirebaseAPI {
     private StorageReference storageRef;
     private CollectionReference restaurantsCollection;
     private CollectionReference ordersCollection;
+    private CollectionReference ordersReviewCollection;
     private CollectionReference customersCollection;
     private static FirebaseAPI firebase;
 
@@ -37,6 +39,7 @@ public class FirebaseAPI {
         restaurantsCollection = db.collection("restaurants");
         customersCollection = db.collection("customers");
         ordersCollection = db.collection("orders");
+        ordersReviewCollection = db.collection("ordersReviews");
     }
 
     public static FirebaseAPI getInstance() {
@@ -121,6 +124,18 @@ public class FirebaseAPI {
         executeQuery(query, callback);
     }
 
+
+    public void getOrderProducts(String orderId, OnSuccessListener<QuerySnapshot> callback) {
+        Query query = ordersCollection.document(orderId).collection("product");
+        executeQuery(query, callback);
+    }
+
+    public void getOrderIngredients(String orderId, String productId, OnSuccessListener<QuerySnapshot> callback) {
+        Query query = ordersCollection.document(orderId).collection("product")
+                .document(productId).collection("ingredient");
+        executeQuery(query, callback);
+    }
+
     public void getShops(OnSuccessListener<QuerySnapshot> callback) {
         Query query = restaurantsCollection;
         executeQuery(query, callback);
@@ -155,7 +170,7 @@ public class FirebaseAPI {
         long MAX_DOWNLOAD_SIZE = 1024 * 1024; // 1 MB
 
         imageRef.getBytes(MAX_DOWNLOAD_SIZE)
-                .addOnSuccessListener(bytes -> callback.onSuccess(bytes))
+                .addOnSuccessListener(callback)
                 .addOnFailureListener(exception -> callback.onSuccess(null));
     }
 

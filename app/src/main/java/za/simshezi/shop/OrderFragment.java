@@ -1,6 +1,7 @@
 package za.simshezi.shop;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
@@ -30,6 +32,7 @@ public class OrderFragment extends Fragment {
     private List<OrderModel> orders;
     private RecyclerView lstOrders;
     private TextView tvNoOrders;
+    private FloatingActionButton btnRefresh;
 
     public OrderFragment() {
     }
@@ -49,6 +52,7 @@ public class OrderFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         lstOrders = view.findViewById(R.id.lstOrders);
         tvNoOrders = view.findViewById(R.id.tvNoOrders);
+        btnRefresh = view.findViewById(R.id.btnOrdersRefresh);
         build();
     }
 
@@ -59,10 +63,16 @@ public class OrderFragment extends Fragment {
             FirebaseAPI.getInstance().getOrders(model.getUser().getEmail(), documentSnapshots -> {
                 if(documentSnapshots != null && !documentSnapshots.isEmpty()){
                     for (QueryDocumentSnapshot document : documentSnapshots){
-                        orders.add(document.toObject(OrderModel.class));
+                        OrderModel order = document.toObject(OrderModel.class);
+                        order.setId(document.getId());
+                        orders.add(order);
                     }
-                    OrderAdapter adapter = new OrderAdapter(orders, (view) -> {
-
+                    OrderAdapter adapter = new OrderAdapter(orders, (viewModel) -> {
+                        OrderModel orderModel = (OrderModel) viewModel;
+                        Intent intent = new Intent(requireContext(), ManageOrderActivity.class);
+                        model.setOrder(orderModel);
+                        intent.putExtra("cart", model);
+                        startActivity(intent);
                     });
                     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
                     ShopItemDecoration decoration = new ShopItemDecoration();
@@ -70,8 +80,7 @@ public class OrderFragment extends Fragment {
                     lstOrders.setLayoutManager(layoutManager);
                     lstOrders.addItemDecoration(decoration);
 
-                    lstOrders.setVisibility(View.VISIBLE);
-                    tvNoOrders.setVisibility(View.GONE);
+                    btnRefresh.setOnClickListener((view) -> build());
                 }else {
                     lstOrders.setVisibility(View.GONE);
                     tvNoOrders.setVisibility(View.VISIBLE);

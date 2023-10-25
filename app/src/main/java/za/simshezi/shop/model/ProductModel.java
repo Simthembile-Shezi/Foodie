@@ -1,6 +1,9 @@
 package za.simshezi.shop.model;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductModel implements Serializable {
@@ -11,14 +14,6 @@ public class ProductModel implements Serializable {
     private Double price;
     private byte[] image;
     private List<IngredientModel> ingredients;
-
-    public ProductModel(String shopId, String name, String description, Double price, byte[] image) {
-        this.shopId = shopId;
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.image = image;
-    }
 
     public ProductModel() {
     }
@@ -77,5 +72,9 @@ public class ProductModel implements Serializable {
 
     public void setIngredients(List<IngredientModel> ingredients) {
         this.ingredients = ingredients;
+    }
+
+    public void addIngredients(IngredientModel ingredient) {
+        ingredients.add(ingredient);
     }
 }

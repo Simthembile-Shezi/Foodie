@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/theme"
+    tools:context=".ManageOrderActivity">
+
+    <TextView
+        android:id="@+id/tvOrderSummery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="Order Summery"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/lbOrderSummeryCustomerName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="30dp"
+        android:text="Customer Name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvOrderSummery" />
+
+    <TextView
+        android:id="@+id/lbOrderSummeryTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="Order Time"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lbOrderSummeryShopName" />
+
+    <TextView
+        android:id="@+id/tvOrderSummeryCustomerName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:text="@string/full_name"
+        app:layout_constraintBottom_toBottomOf="@+id/lbOrderSummeryCustomerName"
+        app:layout_constraintStart_toEndOf="@+id/lbOrderSummeryCustomerName"
+        app:layout_constraintTop_toTopOf="@+id/lbOrderSummeryCustomerName"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/tvOrderSummeryTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        android:text="19:20"
+        app:layout_constraintBottom_toBottomOf="@+id/lbOrderSummeryTime"
+        app:layout_constraintStart_toEndOf="@+id/lbOrderSummeryTime"
+        app:layout_constraintTop_toTopOf="@+id/lbOrderSummeryTime"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/lbOrderSummeryPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="120dp"
+        android:layout_marginBottom="10dp"
+        android:text="Total Price"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/btnOrderSummeryExit"
+        app:layout_constraintEnd_toStartOf="@+id/tvOrderSummeryPrice" />
+
+    <TextView
+        android:id="@+id/tvOrderSummeryPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
+        android:text="@string/default_price"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/lbOrderSummeryPrice"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/lbOrderSummeryPrice"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/lstOrderProducts"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/lbOrderSummeryPrice"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lbOrderSummeryPayment" />
+
+    <Button
+        android:id="@+id/btnOrderSummeryExit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:onClick="onOrderExit"
+        android:text="Exit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/lbOrderSummeryStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="Order Status"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lbOrderSummeryTime" />
+
+    <TextView
+        android:id="@+id/tvOrderSummeryStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="72dp"
+        android:text="Placed"
+        app:layout_constraintBottom_toBottomOf="@+id/lbOrderSummeryStatus"
+        app:layout_constraintStart_toEndOf="@+id/lbOrderSummeryStatus"
+        app:layout_constraintTop_toTopOf="@+id/lbOrderSummeryStatus"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/lbOrderSummeryPayment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="Payment Method"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lbOrderSummeryStatus" />
+
+    <TextView
+        android:id="@+id/tvOrderSummeryPayment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="44dp"
+        android:text="Cash"
+        app:layout_constraintBottom_toBottomOf="@+id/lbOrderSummeryPayment"
+        app:layout_constraintStart_toEndOf="@+id/lbOrderSummeryPayment"
+        app:layout_constraintTop_toTopOf="@+id/lbOrderSummeryPayment"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/lbOrderSummeryShopName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/shop_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lbOrderSummeryCustomerName" />
+
+    <TextView
+        android:id="@+id/tvOrderSummeryShopName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="76dp"
+        android:text="@string/shop_name"
+        app:layout_constraintBottom_toBottomOf="@+id/lbOrderSummeryShopName"
+        app:layout_constraintStart_toEndOf="@+id/lbOrderSummeryShopName"
+        app:layout_constraintTop_toTopOf="@+id/lbOrderSummeryShopName"
+        app:layout_constraintVertical_bias="0.0" />
+</androidx.constraintlayout.widget.ConstraintLayout>
