@@ -77,9 +77,9 @@ public class CartFragment extends Fragment {
                 double subtotal = cart.calculatePrice();
                 double fees = subtotal * 0.05;
                 double total = subtotal + fees;
-                tvSubtotal.setText(String.format("R %s", JavaAPI.formatDouble(subtotal)));
-                tvFees.setText(String.format("R %s", JavaAPI.formatDouble(fees)));
-                tvTotal.setText(String.format("R %s", JavaAPI.formatDouble(total)));
+                tvSubtotal.setText(String.format("R %.2f", subtotal));
+                tvFees.setText(String.format("R %.2f", fees));
+                tvTotal.setText(String.format("R %.2f", total));
                 tvName.setText(cart.getShop().getName());
                 byte[] image = cart.getShop().getImage();
                 if (image != null) {

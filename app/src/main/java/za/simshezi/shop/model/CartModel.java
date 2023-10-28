@@ -31,6 +31,9 @@ public class CartModel implements Serializable {
         this.shop = shop;
     }
 
+    public ShopModel getShop() {
+        return shop;
+    }
     public void setList(ArrayList<ProductModel> list) {
         this.list = list;
     }
@@ -52,8 +55,8 @@ public class CartModel implements Serializable {
         return price;
     }
 
-    public ShopModel getShop() {
-        return shop;
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
     public UserModel getUser() {
@@ -72,9 +75,6 @@ public class CartModel implements Serializable {
         this.payment = payment;
     }
 
-    public void setPrice(Double price) {
-        this.price = price;
-    }
 
     public int getDEST() {
         return DEST;

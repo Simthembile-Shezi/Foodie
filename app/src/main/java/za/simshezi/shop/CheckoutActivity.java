@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 import za.simshezi.shop.api.FirebaseAPI;
 import za.simshezi.shop.model.CartModel;
+import za.simshezi.shop.model.UserModel;
 
 public class CheckoutActivity extends AppCompatActivity {
 
@@ -46,17 +47,18 @@ public class CheckoutActivity extends AppCompatActivity {
         Intent intent = getIntent();
         CartModel cart = (CartModel) intent.getSerializableExtra("cart");
         if(cart != null){
+            UserModel user = cart.getUser();
             String payment;
             if(btnCash.isChecked()){
                 payment = btnCash.getText().toString();
-            }else if(btnCard.isChecked()){
+            }else if(btnCard.isChecked() && user.isCard()){
                 payment = btnCard.getText().toString();
-            }else if(btnEFT.isChecked()){
+            }else if(btnEFT.isChecked() && user.isEft()){
                 payment = btnEFT.getText().toString();
-            }else if(btnWallet.isChecked()){
+            }else if(btnWallet.isChecked() && user.getCredit() > cart.getPrice()){
                 payment = btnWallet.getText().toString();
             }else {
-                Toast.makeText(this, "Select Payment Method", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Select Valid Payment Method", Toast.LENGTH_SHORT).show();
                 return;
             }
             cart.setPayment(payment);

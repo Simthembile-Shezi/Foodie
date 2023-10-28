@@ -57,8 +57,8 @@ public class AddProductCartActivity extends AppCompatActivity {
         if(model != null){
             tvName.setText(model.getName());
             tvDescription.setText(model.getDescription());
-            tvPrice.setText(String.format("R %s", JavaAPI.formatDouble(model.getPrice())));
-            btnAddCart.setText(String.format("Add : R %s", JavaAPI.formatDouble(model.getPrice())));
+            tvPrice.setText(String.format("R %.2f", model.getPrice()));
+            btnAddCart.setText(String.format("Add : R %.2f", model.getPrice()));
             if(model.getImage() != null) {
                 imgProduct.setImageBitmap(ImagesAPI.convertToBitmap(model.getImage()));
             }else {
@@ -98,7 +98,7 @@ public class AddProductCartActivity extends AppCompatActivity {
                 if (model.getCount() > 0)
                     total += (model.getPrice() * model.getCount());
             }
-            btnAddCart.setText(String.format("Add : R %s", JavaAPI.formatDouble(total)));
+            btnAddCart.setText(String.format("Add : R %.2f", total));
         });
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         RecyclerView.ItemDecoration decoration = new IngredientItemDecoration();

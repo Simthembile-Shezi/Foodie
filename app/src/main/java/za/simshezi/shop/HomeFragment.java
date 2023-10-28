@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -98,10 +99,11 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
         lstShops.setLayoutManager(layoutManager);
         lstShops.addItemDecoration(decoration);
         btnRefresh.setOnClickListener(view -> build());
+        searchView.setOnClickListener(view -> searchView.setIconified(false));
         searchView.setOnQueryTextListener(HomeFragment.this);
     }
 
-    private void filter(String text) {
+    private boolean filter(String text) {
         // creating a new array list to filter shops.
         ArrayList<ShopModel> filtered = new ArrayList<>();
 
@@ -112,20 +114,20 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
         }
         if (filtered.isEmpty()) {
             Toast.makeText(getContext(), "No Shop Found..", Toast.LENGTH_SHORT).show();
+            return true;
         } else {
             adapter.filter(filtered);
+            return false;
         }
     }
 
     @Override
     public boolean onQueryTextSubmit(String s) {
-        filter(s);
-        return false;
+       return filter(s);
     }
 
     @Override
     public boolean onQueryTextChange(String s) {
-        filter(s);
         return false;
     }
 }

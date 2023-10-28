@@ -55,7 +55,7 @@ public class ShopProductActivity extends AppCompatActivity {
                     btnCart.setVisibility(View.VISIBLE);
                 }
                 cart.add(model);
-                btnCart.setText(String.format("R %s", JavaAPI.formatDouble(cart.calculatePrice())));
+                btnCart.setText(String.format("R %.2f", cart.calculatePrice()));
             }
         }
     }
@@ -80,7 +80,7 @@ public class ShopProductActivity extends AppCompatActivity {
 
             double price = cart.calculatePrice();
             if (price > 0) {
-                btnCart.setText(String.format("R %s", JavaAPI.formatDouble(price)));
+                btnCart.setText(String.format("R %.2f", price));
             } else {
                 btnCart.setVisibility(View.GONE);
             }

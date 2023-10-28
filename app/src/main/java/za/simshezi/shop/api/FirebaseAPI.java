@@ -1,6 +1,7 @@
 package za.simshezi.shop.api;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import za.simshezi.shop.model.CartModel;
 import za.simshezi.shop.model.IngredientModel;
@@ -28,7 +30,6 @@ public class FirebaseAPI {
     private StorageReference storageRef;
     private CollectionReference restaurantsCollection;
     private CollectionReference ordersCollection;
-    private CollectionReference ordersReviewCollection;
     private CollectionReference customersCollection;
     private static FirebaseAPI firebase;
 
@@ -39,7 +40,6 @@ public class FirebaseAPI {
         restaurantsCollection = db.collection("restaurants");
         customersCollection = db.collection("customers");
         ordersCollection = db.collection("orders");
-        ordersReviewCollection = db.collection("ordersReviews");
     }
 
     public static FirebaseAPI getInstance() {
@@ -54,6 +54,9 @@ public class FirebaseAPI {
         user.put("email", model.getEmail());
         user.put("name", model.getName());
         user.put("cellphone", model.getCellphone());
+        user.put("credit", model.getCredit());
+        user.put("eft", model.isEft());
+        user.put("card", model.isCard());
 
         customersCollection.add(user)
                 .addOnSuccessListener(runnable -> callback.onSuccess(true))
@@ -76,6 +79,17 @@ public class FirebaseAPI {
         executeQuery(query, callback);
     }
 
+    public void getAvailableBalance(String id, OnSuccessListener<Double> callback) {
+        customersCollection.document(id).get()
+                .addOnSuccessListener(documentSnapshot -> callback
+                        .onSuccess(documentSnapshot.getDouble("credit")))
+                .addOnFailureListener((e) -> callback.onSuccess(null));
+    }
+    public void addVoucher(String id, Double credit, OnSuccessListener<Boolean> callback) {
+        customersCollection.document(id).update("credit", credit)
+                .addOnSuccessListener((runnable) -> callback.onSuccess(true))
+                .addOnFailureListener(e -> callback.onSuccess(false));
+    }
     public void setOrder(CartModel cart, OnSuccessListener<Boolean> callback) {
         Map<String, Object> order = new HashMap<>();
         order.put("customer", cart.getUser().getName());
@@ -173,6 +187,5 @@ public class FirebaseAPI {
                 .addOnSuccessListener(callback)
                 .addOnFailureListener(exception -> callback.onSuccess(null));
     }
-
 
 }

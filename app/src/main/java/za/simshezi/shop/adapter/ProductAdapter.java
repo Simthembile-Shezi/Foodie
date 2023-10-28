@@ -89,7 +89,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             }
             tvName.setText(product.getName());
             tvDescription.setText(product.getDescription());
-            tvPrice.setText(String.format("R %s", JavaAPI.formatDouble(product.getPrice())));
+            tvPrice.setText(String.format("R %.2f", product.getPrice()));
         }
     }
 }

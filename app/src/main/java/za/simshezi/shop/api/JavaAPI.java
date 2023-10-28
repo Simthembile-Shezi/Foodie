@@ -18,8 +18,4 @@ public class JavaAPI {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         return sdf.format(date);
     }
-    public static String formatDouble(Double number){
-        DecimalFormat decimalFormat = new DecimalFormat("#.00");
-        return decimalFormat.format(number);
-    }
 }

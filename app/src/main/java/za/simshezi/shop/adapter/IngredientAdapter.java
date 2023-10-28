@@ -87,7 +87,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
         public void setIngredient(IngredientModel ingredient) {
             this.ingredient = ingredient;
             tvName.setText(ingredient.getName());
-            tvPrice.setText(String.format("R %s", JavaAPI.formatDouble(ingredient.getPrice())));
+            tvPrice.setText(String.format("R %.2f", ingredient.getPrice()));
             btnRemove.setOnClickListener(view -> {
                 int count = ingredient.getCount();
                 if (count > 0) {

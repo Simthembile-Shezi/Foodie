@@ -64,7 +64,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         public void setProduct(ProductModel model, AdapterClickListener listener, Context context) {
             ProductIngredientAdapter adapter = new ProductIngredientAdapter(context ,model.getIngredients());
             tvProductName.setText(model.getName());
-            tvProductPrice.setText(String.format("R %s", JavaAPI.formatDouble(model.getPrice())));
+            tvProductPrice.setText(String.format("R %.2f", model.getPrice()));
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
             listView.setAdapter(adapter);
             listView.setLayoutManager(layoutManager);

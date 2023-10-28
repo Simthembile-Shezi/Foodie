@@ -49,7 +49,7 @@ public class ManageOrderActivity extends AppCompatActivity {
         tvPayment.setText(cart.getOrder().getPayment());
         tvETA.setText(cart.getOrder().getTime());
         tvStatus.setText(cart.getOrder().getStatus());
-        tvPrice.setText(String.format("R %s", JavaAPI.formatDouble(cart.getOrder().getPrice())));
+        tvPrice.setText(String.format("R %.2f", cart.getOrder().getPrice()));
         list = new ArrayList<>();
         api.getOrderProducts(orderId, queryDocument -> {
             if(queryDocument != null){

@@ -89,7 +89,7 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ShopViewHolder
                 imgShop.setImageResource(R.drawable.baseline_fastfood_24);
             }
             tvName.setText(model.getName());
-            tvRating.setText(String.format("%s", model.getRating()));
+            tvRating.setText(String.format("%.2f", model.getRating()));
         }
     }
 }
