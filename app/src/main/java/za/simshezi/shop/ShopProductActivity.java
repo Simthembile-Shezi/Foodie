@@ -20,16 +20,16 @@ import java.util.ArrayList;
 import za.simshezi.shop.adapter.ProductAdapter;
 import za.simshezi.shop.api.FirebaseAPI;
 import za.simshezi.shop.api.ImagesAPI;
-import za.simshezi.shop.api.JavaAPI;
 import za.simshezi.shop.model.CartModel;
 import za.simshezi.shop.model.ProductModel;
+import za.simshezi.shop.model.ShopModel;
 import za.simshezi.shop.style.ProductItemDecoration;
 
 public class ShopProductActivity extends AppCompatActivity {
     public static final int REQ_CODE = 1999;
     private RecyclerView lstProducts;
     private ProductAdapter adapter;
-    private TextView tvName;
+    private TextView tvName, tvRating, tvOpenTimes,tvOpenDays, tvShopStatus, tvAddress;
     private ImageView imgShop;
     private Button btnCart;
     private CartModel cart;
@@ -41,6 +41,11 @@ public class ShopProductActivity extends AppCompatActivity {
         lstProducts = findViewById(R.id.lstProducts);
         btnCart = findViewById(R.id.btnShopCart);
         tvName = findViewById(R.id.tvProductShopName);
+        tvRating = findViewById(R.id.tvProductShopRating);
+        tvAddress = findViewById(R.id.tvProductShopAddress);
+        tvShopStatus = findViewById(R.id.tvShopStatus);
+        tvOpenTimes = findViewById(R.id.tvShopTimes);
+        tvOpenDays = findViewById(R.id.tvShopDays);
         imgShop = findViewById(R.id.imgProductShopImage);
         build();
     }
@@ -84,8 +89,18 @@ public class ShopProductActivity extends AppCompatActivity {
             } else {
                 btnCart.setVisibility(View.GONE);
             }
-            imgShop.setImageBitmap(ImagesAPI.convertToBitmap(cart.getShop().getImage()));
-            tvName.setText(cart.getShop().getName());
+            ShopModel shop = cart.getShop();
+            if(shop.getImage() != null) {
+                imgShop.setImageBitmap(ImagesAPI.convertToBitmap(shop.getImage()));
+            }else {
+                imgShop.setImageResource(R.drawable.baseline_fastfood_24);
+            }
+            tvName.setText(shop.getName());
+            tvOpenTimes.setText(shop.getTimes());
+            tvOpenDays.setText(shop.getDays());
+            tvShopStatus.setText(shop.getStatus());
+            tvAddress.setText(shop.getAddress());
+            tvRating.setText(String.format("%.2f", shop.getRating()));
             String id = cart.getShop().getId();
             api.getProducts(id, querySnapshot -> {
                 if (querySnapshot != null) {

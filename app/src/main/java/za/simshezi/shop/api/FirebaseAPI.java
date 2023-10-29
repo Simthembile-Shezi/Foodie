@@ -55,7 +55,6 @@ public class FirebaseAPI {
         user.put("name", model.getName());
         user.put("cellphone", model.getCellphone());
         user.put("credit", model.getCredit());
-        user.put("eft", model.isEft());
         user.put("card", model.isCard());
 
         customersCollection.add(user)
@@ -79,14 +78,13 @@ public class FirebaseAPI {
         executeQuery(query, callback);
     }
 
-    public void getAvailableBalance(String id, OnSuccessListener<Double> callback) {
-        customersCollection.document(id).get()
-                .addOnSuccessListener(documentSnapshot -> callback
-                        .onSuccess(documentSnapshot.getDouble("credit")))
-                .addOnFailureListener((e) -> callback.onSuccess(null));
-    }
-    public void addVoucher(String id, Double credit, OnSuccessListener<Boolean> callback) {
+    public void editAvailableBalance(String id, Double credit, OnSuccessListener<Boolean> callback) {
         customersCollection.document(id).update("credit", credit)
+                .addOnSuccessListener((runnable) -> callback.onSuccess(true))
+                .addOnFailureListener(e -> callback.onSuccess(false));
+    }
+    public void editCardStatus(String id, OnSuccessListener<Boolean> callback) {
+        customersCollection.document(id).update("card", true)
                 .addOnSuccessListener((runnable) -> callback.onSuccess(true))
                 .addOnFailureListener(e -> callback.onSuccess(false));
     }
@@ -151,7 +149,7 @@ public class FirebaseAPI {
     }
 
     public void getShops(OnSuccessListener<QuerySnapshot> callback) {
-        Query query = restaurantsCollection;
+        Query query = restaurantsCollection.orderBy("rating", Query.Direction.DESCENDING);;
         executeQuery(query, callback);
     }
 

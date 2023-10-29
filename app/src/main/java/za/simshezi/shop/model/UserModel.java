@@ -8,7 +8,6 @@ public class UserModel implements Serializable {
     private String email;
     private String cellphone;
     private Double credit;
-    private boolean eft;
     private boolean card;
 
     public UserModel() {
@@ -19,7 +18,6 @@ public class UserModel implements Serializable {
         this.email = email;
         this.cellphone = cellphone;
         this.credit = 0.0;
-        this.eft = false;
         this.card = false;
     }
 
@@ -61,14 +59,6 @@ public class UserModel implements Serializable {
 
     public void setCredit(Double credit) {
         this.credit = credit;
-    }
-
-    public boolean isEft() {
-        return eft;
-    }
-
-    public void setEft(boolean eft) {
-        this.eft = eft;
     }
 
     public boolean isCard() {

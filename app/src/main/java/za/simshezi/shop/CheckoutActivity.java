@@ -20,7 +20,8 @@ import za.simshezi.shop.model.UserModel;
 public class CheckoutActivity extends AppCompatActivity {
 
     private TextView tvCustomer, tvShop, tvPrice;
-    private RadioButton btnCash, btnCard, btnEFT, btnWallet;
+    private RadioButton btnCash, btnCard, btnWallet;
+    private FirebaseAPI api;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,9 +32,9 @@ public class CheckoutActivity extends AppCompatActivity {
         tvPrice = findViewById(R.id.tvChechoutPrice);
         btnCash = findViewById(R.id.btnCash);
         btnCard = findViewById(R.id.btnCard);
-        btnEFT = findViewById(R.id.btnEFT);
         btnWallet = findViewById(R.id.btnWallet);
 
+        api = FirebaseAPI.getInstance();
         Intent intent = getIntent();
         CartModel cart = (CartModel) intent.getSerializableExtra("cart");
         if(cart != null){
@@ -53,16 +54,16 @@ public class CheckoutActivity extends AppCompatActivity {
                 payment = btnCash.getText().toString();
             }else if(btnCard.isChecked() && user.isCard()){
                 payment = btnCard.getText().toString();
-            }else if(btnEFT.isChecked() && user.isEft()){
-                payment = btnEFT.getText().toString();
             }else if(btnWallet.isChecked() && user.getCredit() > cart.getPrice()){
                 payment = btnWallet.getText().toString();
+                api.editAvailableBalance(user.getId(), (user.getCredit() - cart.getPrice()),
+                        bool -> Toast.makeText(this, "Payment Successful", Toast.LENGTH_SHORT).show());
             }else {
                 Toast.makeText(this, "Select Valid Payment Method", Toast.LENGTH_SHORT).show();
                 return;
             }
             cart.setPayment(payment);
-            FirebaseAPI.getInstance().setOrder(cart, bool ->{
+            api.setOrder(cart, bool ->{
                 if(bool){
                     Toast.makeText(this, "Order placed", Toast.LENGTH_SHORT).show();
                     cart.setList(new ArrayList<>());

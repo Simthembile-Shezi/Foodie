@@ -16,10 +16,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import za.simshezi.shop.adapter.OrderAdapter;
 import za.simshezi.shop.api.FirebaseAPI;
@@ -67,6 +70,8 @@ public class OrderFragment extends Fragment {
                         order.setId(document.getId());
                         orders.add(order);
                     }
+                    orders = orders.stream().sorted((prev, next) -> next.getTime().compareTo(prev.getTime()))
+                            .collect(Collectors.toList());
                     OrderAdapter adapter = new OrderAdapter(orders, (viewModel) -> {
                         OrderModel orderModel = (OrderModel) viewModel;
                         Intent intent = new Intent(requireContext(), ManageOrderActivity.class);

@@ -2,6 +2,7 @@ package za.simshezi.shop;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -39,11 +40,11 @@ public class CreditWalletActivity extends AppCompatActivity {
 
     public void addVoucherClicked(View view) {
         String code = edVoucher.getText().toString();
-        if (code.length() != 8) {
+        if (TextUtils.isEmpty(code) && code.length() != 8) {
             Toast.makeText(this, "Enter voucher code", Toast.LENGTH_SHORT).show();
         } else {
             user.setCredit(user.getCredit() + 50);
-            new Thread(() -> api.addVoucher(user.getId(), user.getCredit(), bool -> runOnUiThread(() -> {
+            new Thread(() -> api.editAvailableBalance(user.getId(), user.getCredit(), bool -> runOnUiThread(() -> {
                 if (bool) {
                     Toast.makeText(this, "Voucher added", Toast.LENGTH_SHORT).show();
                     tvAvailableCredit.setText(String.format("R %.2f", user.getCredit()));

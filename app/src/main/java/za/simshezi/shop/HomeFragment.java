@@ -85,9 +85,12 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
             if (cart.getShop() == null) {
                 cart.setShop(shopModel);
             } else if (!Objects.equals(cart.getShop().getName(), shopModel.getName())) {
+                if (cart.calculatePrice() > 0.0) {
+                    cart.setList(new ArrayList<>());
+                    Toast.makeText(getContext(), String.format("Incomplete order from %s has been removed", cart.getShop().getName()), Toast.LENGTH_LONG).show();
+                }
                 cart.setShop(shopModel);
-                Toast.makeText(getContext(), String.format("Incomplete order from %s has been removed", cart.getShop()), Toast.LENGTH_LONG).show();
-            }else {
+            } else {
                 cart.getShop().setImage(shopModel.getImage());
             }
             intent.putExtra("cart", cart);
@@ -123,7 +126,7 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
 
     @Override
     public boolean onQueryTextSubmit(String s) {
-       return filter(s);
+        return filter(s);
     }
 
     @Override

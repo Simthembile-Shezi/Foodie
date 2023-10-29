@@ -101,12 +101,6 @@
             android:text="Card" />
 
         <RadioButton
-            android:id="@+id/btnEFT"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="EFT" />
-
-        <RadioButton
             android:id="@+id/btnWallet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
