@@ -28,9 +28,11 @@ public class FirebaseAPI {
     private FirebaseFirestore db;
     private FirebaseStorage storage;
     private StorageReference storageRef;
-    private CollectionReference restaurantsCollection;
-    private CollectionReference ordersCollection;
-    private CollectionReference customersCollection;
+    private final CollectionReference restaurantsCollection;
+    private final CollectionReference ordersCollection;
+    private final CollectionReference customersCollection;
+    private final CollectionReference promotionsCollection;
+    private final CollectionReference vouchersCollection;
     private static FirebaseAPI firebase;
 
     private FirebaseAPI() {
@@ -40,6 +42,8 @@ public class FirebaseAPI {
         restaurantsCollection = db.collection("restaurants");
         customersCollection = db.collection("customers");
         ordersCollection = db.collection("orders");
+        promotionsCollection = db.collection("promotions");
+        vouchersCollection = db.collection("voucher");
     }
 
     public static FirebaseAPI getInstance() {
@@ -60,6 +64,17 @@ public class FirebaseAPI {
         customersCollection.add(user)
                 .addOnSuccessListener(runnable -> callback.onSuccess(true))
                 .addOnFailureListener(e -> callback.onSuccess(false));
+    }
+    public void getPromotions(OnSuccessListener<QuerySnapshot> callback){
+        Query query = promotionsCollection.orderBy("end", Query.Direction.ASCENDING);
+        executeQuery(query, callback);
+    }
+    public void getVoucher(String code,OnSuccessListener<DocumentSnapshot> callback){
+        vouchersCollection.document(code).get()
+                .addOnSuccessListener(callback);
+    }
+    public void deleteVoucher(String code){
+        vouchersCollection.document(code).delete();
     }
 
     public void editUser(UserModel model, OnSuccessListener<Boolean> callback) {

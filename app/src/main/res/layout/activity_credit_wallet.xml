@@ -37,7 +37,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/colorAccent">
+                android:background="@color/items">
 
                 <TextView
                     android:id="@+id/tvAvailableCreditLabel"
@@ -76,17 +76,17 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
-        <EditText
-            android:id="@+id/edEnterCredit"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Enter credit voucher code"
-            android:inputType="text"
-            android:minHeight="48dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardView3" />
+    <EditText
+        android:id="@+id/edEnterCredit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Enter credit voucher code"
+        android:inputType="number"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView3" />
 
         <Button
             android:id="@+id/btnAddVoucher"
