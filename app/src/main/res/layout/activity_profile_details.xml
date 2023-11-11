@@ -7,57 +7,62 @@
     android:background="@color/theme"
     tools:context=".ProfileDetailsActivity">
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/tvProfileDetailsLabel"
+        style="@style/boldBlackText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="Profile"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/edProfileDetailsFullname"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/round_text_edit"
+        android:ems="10"
+        android:hint="@string/full_name"
+        android:inputType="text"
+        android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/tvProfileDetailsLabel" />
 
-        <TextView
-            android:id="@+id/textView16"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Profile"
-            android:textSize="34sp" />
+    <EditText
+        android:id="@+id/edProfileDetailsCellphone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/round_text_edit"
+        android:ems="10"
+        android:hint="@string/cellphone_number"
+        android:inputType="text"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edProfileDetailsFullname" />
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/full_name" />
+    <Button
+        android:id="@+id/btnProfileDetailsUpdate"
+        style="@style/greenButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="100dp"
+        android:onClick="updateProfileDetails"
+        android:text="Update"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edProfileDetailsCellphone" />
 
-        <EditText
-            android:id="@+id/edProfileDetailsFullname"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/full_name"
-            android:inputType="text"
-            android:minHeight="48dp" />
 
-        <TextView
-            android:id="@+id/textView18"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/cellphone_number" />
-
-        <EditText
-            android:id="@+id/edProfileDetailsCellphone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/cellphone_number"
-            android:inputType="text"
-            android:minHeight="48dp" />
-
-        <Button
-            android:id="@+id/btnProfileDetailsUpdate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="updateProfileDetails"
-            android:text="Update" />
-
-    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

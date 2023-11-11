@@ -19,11 +19,15 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/items">
+            android:background="@drawable/round_cards">
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -43,10 +47,10 @@
 
                     <TextView
                         android:id="@+id/tvOrderShopName"
+                        style="@style/blackText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/shop_name"
-                        android:textSize="20sp" />
+                        android:text="@string/shop_name" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -55,17 +59,17 @@
 
                         <TextView
                             android:id="@+id/tvOrderItemCount"
-                            android:layout_width="100sp"
+                            style="@style/blackText"
+                            android:layout_width="150sp"
                             android:layout_height="wrap_content"
-                            android:text="3 items"
-                            android:textSize="16sp" />
+                            android:text="3 items" />
 
                         <TextView
                             android:id="@+id/tvOrderPrice"
+                            style="@style/blackText"
                             android:layout_width="100sp"
                             android:layout_height="wrap_content"
-                            android:text="R 100"
-                            android:textSize="16sp" />
+                            android:text="R 100" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -75,17 +79,17 @@
 
                         <TextView
                             android:id="@+id/tvOrderDate"
-                            android:layout_width="100sp"
+                            style="@style/blackText"
+                            android:layout_width="150sp"
                             android:layout_height="wrap_content"
-                            android:text="30/20/2023"
-                            android:textSize="16sp" />
+                            android:text="30/20/2023" />
 
                         <TextView
                             android:id="@+id/tvOrderStatus"
+                            style="@style/blackText"
                             android:layout_width="100sp"
                             android:layout_height="wrap_content"
-                            android:text="Complete"
-                            android:textSize="16sp" />
+                            android:text="Complete" />
                     </LinearLayout>
 
                 </LinearLayout>

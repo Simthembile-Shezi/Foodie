@@ -13,16 +13,17 @@
 
         <TextView
             android:id="@+id/tvProfileFullname"
+            style="@style/normalBlackText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/full_name"
-            android:textSize="34sp"
             app:layout_constraintEnd_toStartOf="@+id/imgProfile"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tvProfileEmail"
+            style="@style/blackText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/email"
@@ -70,11 +71,11 @@
 
                     <TextView
                         android:id="@+id/tvProfileCard"
+                        style="@style/normalBlackText"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="Card Payments"
-                        android:textSize="40sp" />
+                        android:text="Card Payments" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -92,11 +93,11 @@
 
                     <TextView
                         android:id="@+id/textView4"
+                        style="@style/normalBlackText"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="Credit Wallet"
-                        android:textSize="40sp" />
+                        android:text="Credit Wallet" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -114,11 +115,11 @@
 
                     <TextView
                         android:id="@+id/textView5"
+                        style="@style/normalBlackText"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="Promotions"
-                        android:textSize="40sp" />
+                        android:text="Promotions" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -136,11 +137,11 @@
 
                     <TextView
                         android:id="@+id/textView9"
+                        style="@style/normalBlackText"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="Help"
-                        android:textSize="40sp" />
+                        android:text="Help" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -158,11 +159,11 @@
 
                     <TextView
                         android:id="@+id/textView8"
+                        style="@style/normalBlackText"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="About"
-                        android:textSize="40sp" />
+                        android:text="About" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -180,11 +181,11 @@
 
                     <TextView
                         android:id="@+id/textView6"
+                        style="@style/normalBlackText"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="Privacy"
-                        android:textSize="40sp" />
+                        android:text="Privacy" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -202,11 +203,11 @@
 
                     <TextView
                         android:id="@+id/textView7"
+                        style="@style/normalBlackText"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="Settings"
-                        android:textSize="40sp" />
+                        android:text="Settings" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -214,8 +215,12 @@
 
         <Button
             android:id="@+id/btnSignOut"
+            style="@style/greenButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="100dp"
+            android:layout_marginEnd="100dp"
+            android:layout_marginBottom="10dp"
             android:text="Sign Out"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

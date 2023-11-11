@@ -35,79 +35,89 @@
                         android:id="@+id/imgProductShopImage"
                         android:layout_width="160sp"
                         android:layout_height="160sp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginBottom="10dp"
                         android:maxWidth="200sp"
                         android:maxHeight="200sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvShopTimes"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tvProductShopName"
                         tools:srcCompat="@drawable/image_1" />
 
                     <TextView
                         android:id="@+id/tvProductShopName"
+                        style="@style/normalBlackText"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
                         android:text="@string/shop_name"
-                        android:textSize="30sp"
                         app:layout_constraintEnd_toStartOf="@+id/imgProductShopImage"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/tvProductShopRating"
+                        style="@style/blackText"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
+                        android:layout_marginStart="100dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
                         android:text="4.5"
                         app:layout_constraintEnd_toStartOf="@+id/imgProductShopImage"
+                        app:layout_constraintStart_toEndOf="@+id/tvShopStatus"
+                        app:layout_constraintTop_toBottomOf="@+id/tvProductShopAddress" />
+
+                    <TextView
+                        android:id="@+id/tvShopTimes"
+                        style="@style/blackText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:text="7:00 - 19:00"
+                        app:layout_constraintEnd_toStartOf="@+id/imgProductShopImage"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvShopDays" />
+
+                    <TextView
+                        android:id="@+id/tvProductShopAddress"
+                        style="@style/blackText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:text="10 Avenue, Summer, Port, EC, 6001"
+                        app:layout_constraintEnd_toStartOf="@+id/imgProductShopImage"
+                        app:layout_constraintHorizontal_bias="1.0"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tvProductShopName" />
 
                     <TextView
-                        android:id="@+id/tvShopTimes"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:text="7:00 - 19:00"
-                        app:layout_constraintBottom_toBottomOf="@+id/imgProductShopImage"
-                        app:layout_constraintEnd_toStartOf="@+id/imgProductShopImage"
-                        app:layout_constraintStart_toStartOf="parent" />
-
-                    <TextView
-                        android:id="@+id/tvProductShopAddress"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:text="10 Avenue, Summer, Port, EC, 6001"
-                        app:layout_constraintBottom_toTopOf="@+id/tvShopStatus"
-                        app:layout_constraintEnd_toStartOf="@+id/imgProductShopImage"
-                        app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tvProductShopRating" />
-
-                    <TextView
                         android:id="@+id/tvShopStatus"
+                        style="@style/blackText"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
                         android:text="Open"
-                        app:layout_constraintBottom_toTopOf="@+id/tvShopDays"
-                        app:layout_constraintEnd_toStartOf="@+id/imgProductShopImage"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvProductShopAddress" />
 
                     <TextView
                         android:id="@+id/tvShopDays"
+                        style="@style/blackText"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
                         android:text="Monday-Friday"
-                        app:layout_constraintBottom_toTopOf="@+id/tvShopTimes"
                         app:layout_constraintEnd_toStartOf="@+id/imgProductShopImage"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvShopStatus" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 
@@ -123,6 +133,7 @@
 
     <Button
         android:id="@+id/btnShopCart"
+        style="@style/greenButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:onClick="onCartClicked"

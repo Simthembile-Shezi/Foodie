@@ -20,11 +20,15 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/items">
+            android:background="@drawable/round_cards">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -33,6 +37,7 @@
 
                 <TextView
                     android:id="@+id/tvIngredientName"
+                    style="@style/blackText"
                     android:layout_width="200sp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -40,6 +45,7 @@
 
                 <TextView
                     android:id="@+id/tvIngredientPrice"
+                    style="@style/blackText"
                     android:layout_width="100sp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -56,6 +62,7 @@
 
                 <TextView
                     android:id="@+id/tvIngredientCount"
+                    style="@style/blackText"
                     android:layout_width="30sp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"

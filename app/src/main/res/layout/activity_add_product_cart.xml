@@ -19,31 +19,31 @@
 
     <TextView
         android:id="@+id/tvAddProductCartName"
+        style="@style/normalBlackText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:text="@string/default_name"
-        android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imgAddProductCart" />
 
     <TextView
         android:id="@+id/tvAddProductCartDescription"
+        style="@style/blackText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="@string/default_description"
-        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvAddProductCartName" />
 
     <TextView
         android:id="@+id/tvAddProductCartPrice"
+        style="@style/normalBlackText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:text="@string/default_price"
-        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/imgAddProductCart"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -82,6 +82,7 @@
 
         <Button
             android:id="@+id/btnAddProductCart"
+            style="@style/greenButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"

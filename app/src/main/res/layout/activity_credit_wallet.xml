@@ -12,16 +12,16 @@
     android:background="@color/theme"
     tools:context=".CreditWalletActivity">
 
-        <TextView
-            android:id="@+id/tvWalletLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:text="Wallet"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/tvWalletLabel"
+        style="@style/normalBlackText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="Wallet"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView3"
@@ -37,34 +37,35 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/items">
+                android:background="@drawable/round_cards">
 
                 <TextView
                     android:id="@+id/tvAvailableCreditLabel"
+                    style="@style/blackText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="50dp"
                     android:layout_marginTop="10dp"
                     android:text="Available credit"
-                    android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/tvAvailableCredit"
+                    style="@style/blackText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="50dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:text="R 0.00"
-                    android:textSize="20sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvAvailableCreditLabel" />
 
                 <Button
                     android:id="@+id/btnRefund"
+                    style="@style/greenButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="50dp"
@@ -80,6 +81,10 @@
         android:id="@+id/edEnterCredit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/round_text_edit"
         android:ems="10"
         android:hint="Enter credit voucher code"
         android:inputType="number"
@@ -88,17 +93,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView3" />
 
-        <Button
-            android:id="@+id/btnAddVoucher"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="50dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginEnd="50dp"
-            android:onClick="addVoucherClicked"
-            android:text="Add voucher code"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edEnterCredit" />
+    <Button
+        android:id="@+id/btnAddVoucher"
+        style="@style/greenButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="50dp"
+        android:onClick="addVoucherClicked"
+        android:text="Add voucher code"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edEnterCredit" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

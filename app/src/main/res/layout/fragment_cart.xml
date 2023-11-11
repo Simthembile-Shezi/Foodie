@@ -32,8 +32,8 @@
 
         <ImageView
             android:id="@+id/imgCartShopLogo"
-            android:layout_width="60sp"
-            android:layout_height="0dp"
+            android:layout_width="100sp"
+            android:layout_height="100dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:maxWidth="100sp"
@@ -45,17 +45,18 @@
 
         <TextView
             android:id="@+id/tvCartShopName"
+            style="@style/boldBlackText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:text="@string/default_name"
-            android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tvOrderSummery"
+            style="@style/normalBlackText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
@@ -93,12 +94,14 @@
 
                 <TextView
                     android:id="@+id/tvCartSubTotal"
+                    style="@style/blackText"
                     android:layout_width="200sp"
                     android:layout_height="wrap_content"
                     android:text="Subtotal" />
 
                 <TextView
                     android:id="@+id/tvCartSubTotalAmount"
+                    style="@style/blackText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/default_price" />
@@ -111,12 +114,14 @@
 
                 <TextView
                     android:id="@+id/tvCartFees"
+                    style="@style/blackText"
                     android:layout_width="200sp"
                     android:layout_height="wrap_content"
                     android:text="Fees" />
 
                 <TextView
                     android:id="@+id/tvCartFeesAmount"
+                    style="@style/blackText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/default_price" />
@@ -129,12 +134,14 @@
 
                 <TextView
                     android:id="@+id/tvCartTotal"
+                    style="@style/blackText"
                     android:layout_width="200sp"
                     android:layout_height="wrap_content"
                     android:text="Total" />
 
                 <TextView
                     android:id="@+id/tvCartTotalAmount"
+                    style="@style/blackText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/default_price" />
@@ -145,6 +152,7 @@
 
         <Button
             android:id="@+id/btnCheckOut"
+            style="@style/greenButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"

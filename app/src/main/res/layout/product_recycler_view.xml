@@ -20,28 +20,37 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/items">
+            android:background="@drawable/round_cards">
 
             <TextView
                 android:id="@+id/tvRecyclerProductDescription"
+                style="@style/blackText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/default_description"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvRecyclerProductName" />
 
             <TextView
                 android:id="@+id/tvRecyclerProductName"
+                style="@style/blackText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/default_name"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tvRecyclerProductPrice"
+                style="@style/blackText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="10dp"
                 android:text="@string/default_price"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -50,6 +59,9 @@
                 android:id="@+id/imgRecyclerProduct"
                 android:layout_width="100sp"
                 android:layout_height="100sp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
                 android:maxWidth="100sp"
                 android:maxHeight="100sp"
                 app:layout_constraintBottom_toBottomOf="parent"

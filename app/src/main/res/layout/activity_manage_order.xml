@@ -9,17 +9,18 @@
 
     <TextView
         android:id="@+id/tvOrderSummery"
+        style="@style/boldBlackText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:text="Order Summery"
-        android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/lbOrderSummeryCustomerName"
+        style="@style/blackText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -30,6 +31,7 @@
 
     <TextView
         android:id="@+id/lbOrderSummeryTime"
+        style="@style/blackText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -40,6 +42,7 @@
 
     <TextView
         android:id="@+id/tvOrderSummeryCustomerName"
+        style="@style/blackText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="48dp"
@@ -51,9 +54,10 @@
 
     <TextView
         android:id="@+id/tvOrderSummeryTime"
+        style="@style/blackText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
+        android:layout_marginStart="92dp"
         android:text="19:20"
         app:layout_constraintBottom_toBottomOf="@+id/lbOrderSummeryTime"
         app:layout_constraintStart_toEndOf="@+id/lbOrderSummeryTime"
@@ -62,22 +66,22 @@
 
     <TextView
         android:id="@+id/lbOrderSummeryPrice"
+        style="@style/boldGreenText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="120dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginBottom="8dp"
         android:text="Total Price"
-        android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/btnOrderSummeryExit"
         app:layout_constraintEnd_toStartOf="@+id/tvOrderSummeryPrice" />
 
     <TextView
         android:id="@+id/tvOrderSummeryPrice"
+        style="@style/boldGreenText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="30dp"
         android:text="@string/default_price"
-        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/lbOrderSummeryPrice"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/lbOrderSummeryPrice"
@@ -96,6 +100,7 @@
 
     <Button
         android:id="@+id/btnOrderSummeryExit"
+        style="@style/greenButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -109,6 +114,7 @@
 
     <TextView
         android:id="@+id/lbOrderSummeryStatus"
+        style="@style/blackText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -119,9 +125,10 @@
 
     <TextView
         android:id="@+id/tvOrderSummeryStatus"
+        style="@style/blackText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="72dp"
+        android:layout_marginStart="80dp"
         android:text="Placed"
         app:layout_constraintBottom_toBottomOf="@+id/lbOrderSummeryStatus"
         app:layout_constraintStart_toEndOf="@+id/lbOrderSummeryStatus"
@@ -130,6 +137,7 @@
 
     <TextView
         android:id="@+id/lbOrderSummeryPayment"
+        style="@style/blackText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -140,9 +148,10 @@
 
     <TextView
         android:id="@+id/tvOrderSummeryPayment"
+        style="@style/blackText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
+        android:layout_marginStart="40dp"
         android:text="Cash"
         app:layout_constraintBottom_toBottomOf="@+id/lbOrderSummeryPayment"
         app:layout_constraintStart_toEndOf="@+id/lbOrderSummeryPayment"
@@ -151,6 +160,7 @@
 
     <TextView
         android:id="@+id/lbOrderSummeryShopName"
+        style="@style/blackText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -161,9 +171,10 @@
 
     <TextView
         android:id="@+id/tvOrderSummeryShopName"
+        style="@style/blackText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="76dp"
+        android:layout_marginStart="88dp"
         android:text="@string/shop_name"
         app:layout_constraintBottom_toBottomOf="@+id/lbOrderSummeryShopName"
         app:layout_constraintStart_toEndOf="@+id/lbOrderSummeryShopName"

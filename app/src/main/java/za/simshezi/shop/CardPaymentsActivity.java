@@ -18,6 +18,7 @@ public class CardPaymentsActivity extends AppCompatActivity {
     private EditText edCardHolder, edCardNumber, edExpiryDate, edCardCCV;
     private CartModel model;
     private UserModel user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +28,11 @@ public class CardPaymentsActivity extends AppCompatActivity {
         edCardNumber = findViewById(R.id.edCardNumber);
         edCardCCV = findViewById(R.id.edCardCCV);
         model = (CartModel) getIntent().getSerializableExtra("cart");
+        if (model != null) {
+            user = model.getUser();
+        }else {
+            finishAffinity();
+        }
     }
 
     public void onAddClicked(View view) {
@@ -35,29 +41,27 @@ public class CardPaymentsActivity extends AppCompatActivity {
         String date = edExpiryDate.getText().toString().trim();
         String ccv = edCardCCV.getText().toString().trim();
 
-        if(TextUtils.isEmpty(holder)){
+        if (TextUtils.isEmpty(holder)) {
             Toast.makeText(this, "Enter full names of card holder", Toast.LENGTH_SHORT).show();
-        }else if (TextUtils.isEmpty(number) && number.length() != 16){
+        } else if (TextUtils.isEmpty(number) && number.length() != 16) {
             Toast.makeText(this, "Enter a valid card number", Toast.LENGTH_SHORT).show();
-        }else if(TextUtils.isEmpty(date) && date.length() != 6){
+        } else if (TextUtils.isEmpty(date) && date.length() != 6) {
             Toast.makeText(this, "Enter a valid expiry date", Toast.LENGTH_SHORT).show();
-        }else if(TextUtils.isEmpty(ccv) && ccv.length() != 3){
+        } else if (TextUtils.isEmpty(ccv) && ccv.length() != 3) {
             Toast.makeText(this, "Enter a valid ccv number", Toast.LENGTH_SHORT).show();
-        }else {
-            if (model != null) {
-                user = model.getUser();
-                FirebaseAPI.getInstance().editCardStatus(user.getId(), bool -> runOnUiThread(() ->{
-                    if(bool){
-                        user.setCard(true);
-                        Toast.makeText(this, "Card added", Toast.LENGTH_SHORT).show();
-                        onBackPressed();
-                    }else {
-                        Toast.makeText(this, "Failed adding card", Toast.LENGTH_SHORT).show();
-                    }
-                }));
-            }
+        } else {
+            FirebaseAPI.getInstance().editCardStatus(user.getId(), bool -> runOnUiThread(() -> {
+                if (bool) {
+                    user.setCard(true);
+                    Toast.makeText(this, "Card added", Toast.LENGTH_SHORT).show();
+                    onBackPressed();
+                } else {
+                    Toast.makeText(this, "Failed adding card", Toast.LENGTH_SHORT).show();
+                }
+            }));
         }
     }
+
     @Override
     public void onBackPressed() {
         model.setUser(user);

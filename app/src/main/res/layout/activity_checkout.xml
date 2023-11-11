@@ -9,17 +9,18 @@
 
     <TextView
         android:id="@+id/textView"
+        style="@style/normalBlackText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:text="Check Out"
-        android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/lbCheckoutCustomerName"
+        style="@style/blackText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -30,6 +31,7 @@
 
     <TextView
         android:id="@+id/lbCheckoutShopName"
+        style="@style/blackText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -40,6 +42,7 @@
 
     <TextView
         android:id="@+id/tvCheckoutCustomerName"
+        style="@style/blackText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
@@ -50,16 +53,19 @@
 
     <TextView
         android:id="@+id/tvCheckoutShopName"
+        style="@style/blackText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="76dp"
+        android:layout_marginStart="92dp"
         android:text="@string/shop_name"
         app:layout_constraintBottom_toBottomOf="@+id/lbCheckoutShopName"
         app:layout_constraintStart_toEndOf="@+id/lbCheckoutShopName"
-        app:layout_constraintTop_toTopOf="@+id/lbCheckoutShopName" />
+        app:layout_constraintTop_toTopOf="@+id/lbCheckoutShopName"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/lbCheckoutPrice"
+        style="@style/blackText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -70,9 +76,10 @@
 
     <TextView
         android:id="@+id/tvChechoutPrice"
+        style="@style/blackText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
+        android:layout_marginStart="100dp"
         android:text="@string/default_price"
         app:layout_constraintBottom_toBottomOf="@+id/lbCheckoutPrice"
         app:layout_constraintStart_toEndOf="@+id/lbCheckoutPrice"
@@ -89,6 +96,7 @@
 
         <RadioButton
             android:id="@+id/btnCash"
+            style="@style/blackText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:checked="true"
@@ -96,12 +104,14 @@
 
         <RadioButton
             android:id="@+id/btnCard"
+            style="@style/blackText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Card" />
 
         <RadioButton
             android:id="@+id/btnWallet"
+            style="@style/blackText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Wallet" />
@@ -109,6 +119,7 @@
 
     <Button
         android:id="@+id/btnCheckoutOrder"
+        style="@style/greenButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"

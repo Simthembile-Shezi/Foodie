@@ -20,6 +20,7 @@
 
             <TextView
                 android:id="@+id/tvItemName"
+                style="@style/blackText"
                 android:layout_width="150sp"
                 android:layout_height="wrap_content"
                 android:text="@string/default_name"
@@ -29,6 +30,7 @@
 
             <TextView
                 android:id="@+id/tvItemCount"
+                style="@style/blackText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

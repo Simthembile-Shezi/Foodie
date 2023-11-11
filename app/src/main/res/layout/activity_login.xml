@@ -7,89 +7,163 @@
     android:background="@color/theme"
     tools:context=".LoginActivity">
 
+
     <TextView
-        android:id="@+id/tvLoginNewAccount"
-        android:layout_width="0dp"
+        android:id="@+id/tvLoginForgotPassword4"
+        style="@style/normalBlackText"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="onNewAccountClicked"
-        android:text="@string/no_account"
-        android:textSize="25sp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
+        android:layout_marginTop="10dp"
+        android:minHeight="48dp"
+        android:onClick="onForgotPasswordClicked"
+        android:text="Continue With"
+        app:layout_constraintEnd_toEndOf="@+id/tvLoginForgotPassword"
+        app:layout_constraintStart_toStartOf="@+id/tvLoginForgotPassword"
+        app:layout_constraintTop_toBottomOf="@+id/textView13" />
+
+    <TextView
+        android:id="@+id/tvLoginAppName"
+        style="@style/boldBlackText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:onClick="onForgotPasswordClicked"
+        android:text="@string/app_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvLoginOrSignup"
-        tools:ignore="TouchTargetSizeCheck" />
+        app:layout_constraintTop_toBottomOf="@+id/imgLoginLogo" />
 
     <TextView
         android:id="@+id/tvLoginOrSignup"
-        android:layout_width="0dp"
+        style="@style/boldGreenText"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:text="@string/action_sign_in"
-        android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/tvLoginIntro" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout3"
+    <TextView
+        android:id="@+id/tvLoginIntro"
+        style="@style/greenText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Order Favorite Food, Anywhere, Anytime"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvLoginAppName" />
+
+    <EditText
+        android:id="@+id/edLoginEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/btnLogin"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/round_text_edit"
+        android:ems="10"
+        android:hint="@string/email"
+        android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvLoginOrSignup">
+        app:layout_constraintTop_toBottomOf="@+id/tvLoginOrSignup" />
 
-        <TextView
-            android:id="@+id/tvLoginEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/email" />
+    <EditText
+        android:id="@+id/edLoginPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/round_text_edit"
+        android:ems="10"
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edLoginEmail" />
 
-        <EditText
-            android:id="@+id/edLoginEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/email"
-            android:inputType="textEmailAddress"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/tvLoginPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/password" />
-
-        <EditText
-            android:id="@+id/edLoginPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/password"
-            android:inputType="textPassword"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/tvLoginForgotPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="onForgotPasswordClicked"
-            android:text="@string/forgot_password"
-            android:textSize="25sp"
-            tools:ignore="TouchTargetSizeCheck" />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/tvLoginForgotPassword"
+        style="@style/blackText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:minHeight="48dp"
+        android:onClick="onForgotPasswordClicked"
+        android:text="@string/forgot_password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edLoginPassword" />
 
     <Button
         android:id="@+id/btnLogin"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="100dp"
         android:onClick="onLoginClicked"
         android:text="@string/action_sign_in_short"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton2"
+        style="@style/greenButton"/>
+
+    <TextView
+        android:id="@+id/tvLoginNewAccount"
+        style="@style/blackText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:minHeight="48dp"
+        android:onClick="onNewAccountClicked"
+        android:text="@string/no_account"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
+
+    <ImageView
+        android:id="@+id/imgLoginLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/baseline_fastfood_24" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="Or"
+        app:layout_constraintEnd_toEndOf="@+id/tvLoginForgotPassword"
+        app:layout_constraintStart_toStartOf="@+id/tvLoginForgotPassword"
+        app:layout_constraintTop_toBottomOf="@+id/tvLoginForgotPassword" />
+
+    <ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/round_button"
+        app:layout_constraintStart_toStartOf="@+id/tvLoginForgotPassword4"
+        app:layout_constraintTop_toBottomOf="@+id/tvLoginForgotPassword4"
+        app:srcCompat="@drawable/facebook"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <ImageButton
+        android:id="@+id/imageButton3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/round_button"
+        app:layout_constraintEnd_toEndOf="@+id/tvLoginForgotPassword4"
+        app:layout_constraintTop_toBottomOf="@+id/tvLoginForgotPassword4"
+        app:srcCompat="@drawable/google"
+        tools:ignore="SpeakableTextPresentCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
